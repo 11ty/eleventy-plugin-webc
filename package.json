@@ -1,0 +1,44 @@
+{
+	"name": "@11ty/eleventy-plugin-webc",
+	"version": "0.3.1",
+	"description": "WebC support for Eleventy adds for Single File Web Components",
+	"main": "eleventyWebcPlugin.js",
+	"scripts": {
+		"test": "npx ava"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"license": "MIT",
+	"engines": {
+		"node": ">=14.18"
+	},
+	"funding": {
+		"type": "opencollective",
+		"url": "https://opencollective.com/11ty"
+	},
+	"keywords": [
+		"eleventy",
+		"eleventy-plugin",
+		"web-components",
+		"custom-elements"
+	],
+	"author": {
+		"name": "Zach Leatherman",
+		"email": "zachleatherman@gmail.com",
+		"url": "https://zachleat.com/"
+	},
+	"ava": {
+		"failFast": true,
+		"files": [
+			"./test/*.js"
+		]
+	},
+	"dependencies": {
+		"@11ty/eleventy": "^2.0.0-canary.16",
+		"@11ty/webc": "^0.3.1"
+	},
+	"devDependencies": {
+		"ava": "^4.3.3"
+	}
+}

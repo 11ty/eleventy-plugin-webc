@@ -1,0 +1,9 @@
+---
+frontmatterdata: "HELLO FROM FRONT MATTER"
+layout: layout.webc
+---
+<component></component>
+<component></component>
+WHO IS THIS
+hi
+<span @html="this.frontmatterdata"></span>
