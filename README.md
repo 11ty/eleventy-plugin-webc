@@ -29,9 +29,13 @@ Adds support for [WebC, the single file web component format](https://github.com
 
 ## Installation
 
+You’ve found this early! It’s not yet on npm.
+
+<!--
 ```
 npm install @11ty/eleventy-plugin-webc
 ```
+-->
 
 ## Usage
 
