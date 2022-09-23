@@ -203,7 +203,7 @@ Components can use the `webc:bucket` feature to output to any arbitrary bucket n
 
 ### Use any Eleventy Template Syntax
 
-We’ve wired up [WebC’s Custom Transforms feature](https://github.com/11ty/webc#custom-transforms) to the [Eleventy Render plugin](https://www.11ty.dev/docs/plugins/render/) to allow you to use existing Eleventy template syntax inside of WebC.
+We’ve wired up [WebC’s Custom Transforms feature](https://github.com/11ty/webc#custom-transforms) `webc:type="11ty"` to the [Eleventy Render plugin](https://www.11ty.dev/docs/plugins/render/) to allow you to use existing Eleventy template syntax inside of WebC.
 
 Use the `11ty:type` attribute to specify a [valid template syntax](https://www.11ty.dev/docs/plugins/render/#rendertemplate).
 
