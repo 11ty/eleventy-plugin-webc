@@ -142,12 +142,14 @@ webc:
 
 [Eleventy Layouts](https://www.11ty.dev/docs/layouts/) can bundle any specific page’s assets (CSS and JS used by components on the page). These are automatically rolled up when a component uses `<script>` or `<style>`. You can use this to easily implement component-driven Critical CSS.
 
-`my-webc-component.webc`:
+`_includes/webc/my-webc-component.webc`:
 
 ```html
 <style>/* This is component CSS */</style>
 <script>/* This is component JS */</script>
 ```
+
+`_includes/layout.webc`:
 
 ```html
 <!doctype html>
