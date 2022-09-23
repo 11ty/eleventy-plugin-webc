@@ -1,3 +1,4 @@
+const pkg = require("./package.json");
 const path = require("path");
 const { EleventyRenderPlugin } = require("@11ty/eleventy");
 const EleventyRenderManager = EleventyRenderPlugin.RenderManager;
@@ -10,6 +11,12 @@ const WebCIncremental = require("./src/incremental.js");
  */
 
 module.exports = function(eleventyConfig, options = {}) {
+	try {
+		eleventyConfig.versionCheck(pkg["11ty"].compatibility);
+	} catch(e) {
+		console.log( `WARN: Eleventy Plugin (${pkg.name}) Compatibility: ${e.message}` );
+	}
+
 	options = Object.assign({
 		components: path.join(eleventyConfig.dir.includes, "/") + "**/*.webc"
 	}, options);
