@@ -7,8 +7,11 @@ const CodeManager = require("./src/codeManager.js");
 const WebCIncremental = require("./src/incremental.js");
 
 function relativePath(inputPath, newGlob) {
-	let { dir } = path.parse(inputPath);
-	return path.join(dir, newGlob);
+	if(newGlob.startsWith("~/")) {
+		let { dir } = path.parse(inputPath);
+		return path.join(dir, newGlob.slice(2));
+	}
+	return newGlob;
 }
 
 /* TODO
