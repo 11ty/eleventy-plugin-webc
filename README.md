@@ -7,10 +7,14 @@ Adds support for [WebC, the single file web component format](https://github.com
 ## Features
 
 * All of the [framework-independent WebC features](https://github.com/11ty/webc#features) out of the box.
-* First-class incremental support (for page templates, components, and Eleventy layouts) (use with `--incremental`)
-* Tired of `import` everywhere? Configure no-import global web components or configured in the data cascade to apply to a single template, a directory of templates, or a complex hierarchy of folders-o-templates.
-* WebC components can feed into multiple asset pipelines for use on your page. We call this asset bucketing.
-
+* First-class incremental support (for page templates, components, and Eleventy layouts): use with `--incremental`
+* Tired of importing components?
+	* Configure no-import global web components
+	* Configure no-import components in the data cascade to apply to a single template, a directory of templates, or a complex hierarchy of folders-o-templates.
+* Easiliy roll up the CSS and JS in-use by WebC components on a page for page-specific bundles. Dirt-simple critical CSS/JS to only load the code you need.
+	* Components can roll up CSS/JS assets to arbitrary buckets for custom use!
+* For more complex templating needs, you _can_ render any existing Eleventy template syntax inside of WebC.
+* Works great with out of the box with [is-land](https://www.11ty.dev/docs/plugins/partial-hydration/)
 
 ## ➡ [Documentation](https://www.11ty.dev/docs/languages/webc/)
 
@@ -103,11 +107,21 @@ layout: "my-layout.webc"
 </html>
 ```
 
-### Global no-import Components
+### Components
+
+There are a few ways to use web components here:
+
+1. You can use `webc:import` inside of your components to import another component directly.
+2. Use global no-import components specified in your config file
+3. Specify a glob of no-import components at a directory or template level in the data cascade
+
+Notably, WebC components are not restricted to the same naming limitations as custom elements (they do not require a dash in the name). The [WebC documentation has all of the detail on how to use and configure WebC components](https://github.com/11ty/webc#html-imports-kidding-kinda).
+
+#### Global no-import Components
 
 Use the `components` property in the Full options list in your Eleventy configuration file to specify project-wide WebC component files available for use in any page.
 
-### Specify no-import Components in the Data Cascade
+#### Specify no-import Components in the Data Cascade
 
 You can also use and configure specific components as part of the data cascade as well (global to a folder or a specific template) by assigning a glob (or array of globs) to `webc.components`, like so:
 
@@ -183,4 +197,62 @@ Components can use the `webc:bucket` feature to output to any arbitrary bucket n
 		<script @html="this.getJS(this.page.url, 'defer')"></script>
 	</body>
 </html>
+```
+
+### Use any Eleventy Template Syntax
+
+We’ve wired up [WebC’s Custom Transforms feature](https://github.com/11ty/webc#custom-transforms) to the [Eleventy Render plugin](https://www.11ty.dev/docs/plugins/render/) to allow you to use existing Eleventy template syntax inside of WebC.
+
+Use the `11ty:type` attribute to specify a [valid template syntax](https://www.11ty.dev/docs/plugins/render/#rendertemplate).
+
+`my-page.webc`:
+
+```
+---
+frontmatterdata: "Hello from Front Matter"
+---
+<template webc:type="11ty" 11ty:type="liquid,md">
+{% assign t = "Liquid in WebC" %}
+## {{ t }}
+
+_{{ frontmatterdata }}_
+</template>
+```
+
+You have full access to the data cascade here (see `frontmatterdata` in the example above).
+
+### Use with `is-land`
+
+You can also use this out of the box with Eleventy’s [`is-land` component for web component hydration](https://www.11ty.dev/docs/plugins/partial-hydration/).
+
+At the component level, components can declare their own is-land loading conditions.
+
+_(Some features here require `is-land` 1.0.1 or newer)_
+
+`my-component.webc`:
+
+```html
+<is-land on:visible>
+	<style media="module/island" webc:keep>
+	/* This is some is-land on-visible CSS */
+	</style>
+	<script type="module/island" webc:keep>
+	console.log("This is some is-land on-visible JavaScript");
+	</script>
+
+	<link rel="stylesheet" media="style/island" href="some-arbitrary-css.css">
+	<script type="module/island" src="some-arbitrary-js.js"></script>
+</is-land>
+
+<is-land on:interaction>
+	<style media="module/island" webc:keep>
+		/* This is some is-land on-interaction CSS */
+	</style>
+	<script type="module/island" webc:keep>
+		console.log("This is some is-land on-interaction JavaScript");
+	</script>
+
+	<link rel="stylesheet" media="style/island" href="some-arbitrary-css.css">
+	<script type="module/island" src="some-arbitrary-js.js"></script>
+</is-land>
 ```
