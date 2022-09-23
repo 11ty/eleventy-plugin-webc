@@ -1,0 +1,11 @@
+---
+frontmatterdata: "HELLO FROM FRONT MATTER"
+layout: layout.webc
+webc:
+  components: "./_includes/page1-components/*.webc"
+---
+<say-hello></say-hello>
+<say-hello></say-hello>
+WHO IS THIS
+hi
+<span @html="this.frontmatterdata"></span>

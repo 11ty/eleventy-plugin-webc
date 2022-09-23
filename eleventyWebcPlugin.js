@@ -6,6 +6,11 @@ const EleventyRenderManager = EleventyRenderPlugin.RenderManager;
 const CodeManager = require("./src/codeManager.js");
 const WebCIncremental = require("./src/incremental.js");
 
+function relativePath(inputPath, newGlob) {
+	let { dir } = path.parse(inputPath);
+	return path.join(dir, newGlob);
+}
+
 /* TODO
  * Use JavaScript functions or universal shortcodes as built-in components?
  */
@@ -18,7 +23,7 @@ module.exports = function(eleventyConfig, options = {}) {
 	}
 
 	options = Object.assign({
-		components: path.join(eleventyConfig.dir.includes, "/") + "**/*.webc"
+		components: false, // glob for no-import global components
 	}, options);
 
 	if(options.components) {
@@ -108,7 +113,12 @@ module.exports = function(eleventyConfig, options = {}) {
 			});
 
 			return async (data) => {
-				let setup = await page.setup({ data });
+				let setupObject = { data };
+				if(data.webc?.components) {
+					setupObject.components = incremental.getComponentMap(relativePath(data.page.inputPath, data.webc.components));
+				}
+
+				let setup = await page.setup(setupObject);
 				incremental.addSetup(inputPath, setup);
 
 				let { ast, serializer } = setup;

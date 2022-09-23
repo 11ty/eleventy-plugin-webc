@@ -15,13 +15,21 @@ class WebCIncremental {
 	}
 
 	setComponents(glob) {
-		if(!this.webc) {
-			return;
+		let map = this.getComponentMap(glob);
+		if(map) {
+			this.globalComponentsMap = map;
 		}
-
+	}
+	
+	getComponentMap(glob) {
+		if(!this.webc) {
+			return false;
+		}
+		
 		let WebC = this.webc;
-		this.globalComponentsMap = WebC.getComponentsMap(glob);
-		// console.log( glob, Object.keys(this.globalComponentsMap).length );
+		let components = WebC.getComponentsMap(glob);
+		// console.log( glob, Object.keys(components).length );
+		return components;
 	}
 
 	setLayouts(layouts) {
