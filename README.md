@@ -25,7 +25,7 @@ Adds support for [WebC, the single file web component format](https://github.com
 - [11ty on npm](https://www.npmjs.com/org/11ty)
 - [11ty on GitHub](https://github.com/11ty)
 
-[![npm Version](https://img.shields.io/npm/v/@11ty/eleventy-dev-server.svg?style=for-the-badge)](https://www.npmjs.com/package/@11ty/eleventy-dev-server)
+[![npm Version](https://img.shields.io/npm/v/@11ty/eleventy-plugin-webc.svg?style=for-the-badge)](https://www.npmjs.com/package/@11ty/eleventy-plugin-webc)
 
 ## Installation
 
