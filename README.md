@@ -170,7 +170,7 @@ webc:
 
 Components can use the `webc:bucket` feature to output to any arbitrary bucket name for compartmentalization at the component level.
 
-`my-webc-component.webc`:
+`_includes/webc/my-webc-component.webc`:
 
 ```html
 <style>/* This CSS is put into the default bucket */</style>
@@ -231,7 +231,7 @@ At the component level, components can declare their own is-land loading conditi
 
 _(Some features here require `is-land` 1.0.1 or newer)_
 
-`my-component.webc`:
+`_includes/webc/my-webc-component.webc`:
 
 ```html
 <is-land on:visible>
