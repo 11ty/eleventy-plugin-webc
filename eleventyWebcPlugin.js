@@ -10,13 +10,12 @@ function relativePath(inputPath, newGlob) {
 	// project root
 	if(newGlob.startsWith("~/")) {
 		let rootRelativePath = "." + newGlob.slice(1);
-		console.log( { rootRelativePath } );
 		return rootRelativePath;
 	}
 
 	let { dir } = path.parse(inputPath);
-	let templateRelativePath = path.join(dir, newGlob);
-	console.log( {templateRelativePath} );
+	// globs must have forward slashes (even on Windows)
+	let templateRelativePath = path.join(dir, newGlob).split(path.sep).join("/");
 	return templateRelativePath;
 }
 
