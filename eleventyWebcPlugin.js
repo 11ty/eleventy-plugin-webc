@@ -13,7 +13,7 @@ function relativePath(inputPath, newGlob) {
 	}
 
 	let { dir } = path.parse(inputPath);
-	return path.join(dir, newGlob.slice(2));
+	return path.join(dir, newGlob.slice(2)).split("/").join(path.sep);
 }
 
 /* TODO
