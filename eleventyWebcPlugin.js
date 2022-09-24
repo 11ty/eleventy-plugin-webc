@@ -9,11 +9,15 @@ const WebCIncremental = require("./src/incremental.js");
 function relativePath(inputPath, newGlob) {
 	// project root
 	if(newGlob.startsWith("~/")) {
-		return "." + newGlob.slice(1);
+		let rootRelativePath = "." + newGlob.slice(1);
+		console.log( { rootRelativePath } );
+		return rootRelativePath;
 	}
 
 	let { dir } = path.parse(inputPath);
-	return path.join(dir, newGlob.slice(2)).split("/").join(path.sep);
+	let templateRelativePath = path.join(dir, newGlob);
+	console.log( {templateRelativePath} );
+	return templateRelativePath;
 }
 
 /* TODO
