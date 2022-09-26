@@ -162,3 +162,18 @@ hi
 </body>
 </html>`);
 });
+
+test("WebC using a transform", async t => {
+	let elev = new Eleventy("./test/sample-transform/", "./test/sample-transform/_site", {
+		configPath: "./test/sample-transform/eleventy.config.js"
+	});
+
+	let results = await elev.toJSON();
+	let [result] = results;
+
+	t.is(result.content.trim(), `HELLO
+HELLO
+WHO IS THIS
+hi
+<span>HELLO FROM FRONT MATTER</span>`);
+});
