@@ -46,6 +46,7 @@ class WebCIncremental {
 	add(inputContent, inputPath) {
 		let WebC = this.webc;
 		let page = new WebC();
+		page.setBundlerMode(true);
 		page.setContent(inputContent, inputPath);
 
 		if(this.globalComponentsMap) {

@@ -30,9 +30,16 @@ module.exports = function(eleventyConfig, options = {}) {
 		console.log( `WARN: Eleventy Plugin (${pkg.name}) Compatibility: ${e.message}` );
 	}
 
+	let filters = Object.assign({
+		css: "webcGetCss",
+		js: "webcGetJs",
+	}, options.filters);
+
 	options = Object.assign({
 		components: false, // glob for no-import global components
 	}, options);
+
+	options.filters = filters;
 
 	if(options.components) {
 		eleventyConfig.addWatchTarget(options.components);
@@ -57,9 +64,12 @@ module.exports = function(eleventyConfig, options = {}) {
 		return jsManager.getForPage(pageUrl, bucket);
 	}
 
-	// TODO
-	// eleventyConfig.addFilter("webcGetCSS", (url, bucket) => getCss(url, bucket));
-	// eleventyConfig.addFilter("webcGetJS", (url, bucket) => getJs(url, bucket));
+	if(options.filters.css) {
+		eleventyConfig.addFilter(options.filters.css, (url, bucket) => getCss(url, bucket));
+	}
+	if(options.filters.js) {
+		eleventyConfig.addFilter(options.filters.js, (url, bucket) => getJs(url, bucket));
+	}
 
 	let incremental = new WebCIncremental();
 
