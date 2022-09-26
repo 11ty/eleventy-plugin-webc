@@ -11,7 +11,7 @@ Adds support for [WebC, the single file web component format](https://github.com
 * Tired of importing components?
 	* Configure no-import global web components
 	* Configure no-import components in the data cascade to apply to a single template, a directory of templates, or a complex hierarchy of folders-o-templates.
-* Easiliy roll up the CSS and JS in-use by WebC components on a page for page-specific bundles. Dirt-simple critical CSS/JS to only load the code you need.
+* Easily roll up the CSS and JS in-use by WebC components on a page for page-specific bundles. Dirt-simple critical CSS/JS to only load the code you need.
 	* Components can roll up CSS/JS assets to arbitrary buckets for custom use!
 * For more complex templating needs, you _can_ render any existing Eleventy template syntax inside of WebC.
 * Works great with out of the box with [is-land](https://www.11ty.dev/docs/plugins/partial-hydration/)
