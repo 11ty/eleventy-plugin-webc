@@ -4,6 +4,8 @@
 
 Adds support for [WebC, the single file web component format](https://github.com/11ty/webc), to Eleventy.
 
+Watch the [crash course in Eleventy WebC on YouTube](https://www.youtube.com/watch?v=X-Bpjrkz-V8).
+
 ## Features
 
 * All of the [framework-independent WebC features](https://github.com/11ty/webc#features) out of the box.
