@@ -83,6 +83,17 @@ Adding the plugin will enable support for `.webc` files in your Eleventy project
 
 Notably, `.webc` files will operate [WebC in bundler mode](https://github.com/11ty/webc#aggregating-css-and-js), [aggregating the CSS and JS](#css-and-js) in use on each individual page to create a bundle of the assets in use on the page.
 
+```js
+const pluginWebc = require("@11ty/eleventy-plugin-webc");
+
+module.exports = function(eleventyConfig) {
+	eleventyConfig.addPlugin(pluginWebc, {
+		// Glob to find no-import global components
+		components: "_includes/components/**/*.webc",
+	});
+};
+```
+
 #### Use the Render plugin
 
 Using Eleventy’s built-in [Render plugin](https://www.11ty.dev/docs/plugins/render/) with WebC also works great.
