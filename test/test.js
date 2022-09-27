@@ -1,6 +1,10 @@
 const test = require("ava");
 const Eleventy = require("@11ty/eleventy");
 
+function normalizeNewLines(str) {
+  return str.replace(/\r\n/g, "\n");
+}
+
 test("Sample page (webc layout)", async t => {
 	let elev = new Eleventy("./test/sample-1/page.webc", "./test/sample-1/_site", {
 		configPath: "./test/sample-1/eleventy.config.js"
@@ -41,7 +45,7 @@ test("Sample page (liquid layout and one webc component)", async t => {
 	let results = await elev.toJSON();
 	let [result] = results;
 
-	t.is(result.content.trim(), `<!doctype html>
+	t.is(normalizeNewLines(result.content.trim()), `<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
