@@ -45,8 +45,8 @@ module.exports = function(eleventyConfig) {
 };
 ```
 
-<details open>
-<summary>Full options list</summary>
+<details>
+<summary><strong>Full options list</strong></summary>
 
 ```js
 const pluginWebc = require("@11ty/eleventy-plugin-webc");
