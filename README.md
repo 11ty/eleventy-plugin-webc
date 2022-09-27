@@ -73,8 +73,9 @@ module.exports = function(eleventyConfig) {
 There are a few different ways to use WebC in Eleventy:
 
 1. Add a new `.webc` file to your Eleventy input directory
-2. Use the [Render plugin](https://www.11ty.dev/docs/plugins/render/) in an existing template
-3. Use the WebC Eleventy transform to process all of the HTML files in your project
+1. Use the [Render plugin](https://www.11ty.dev/docs/plugins/render/) in an existing template
+1. Preprocess all HTML input as WebC
+1. Use the WebC Eleventy transform to process all of the HTML output (disabled by default)
 
 #### Add New `.webc` files
 
@@ -94,11 +95,26 @@ Consider this example Nunjucks or Liquid template:
 {% endrenderTemplate %}
 ```
 
+#### Preprocess all HTML input as WebC
+
+You can use the configuration option to change the default HTML preprocessor (from `liquid`) to `webc`. This might look like `htmlTemplateEngine: "webc"`. Read more on the [Eleventy documentation: Default Template Engine for HTML Files](https://www.11ty.dev/docs/config/#default-template-engine-for-html-files).
+
 #### Use the global WebC Eleventy transform
 
 This is a catch-all option to let WebC process _all_ `.html` output files in your project. [Read more about Eleventy transforms.](https://www.11ty.dev/docs/config/#transforms) This method is useful when you want to get up and running with WebC on an existing project quickly (but is also the slowest method for build-performance).
 
 The WebC Eleventy transform operates WebC in non-bundler mode, which means that it does process WebC but _does not_ aggregate JS or CSS on the page.
+
+The transform is disabled by default, you will need to add a configuration option to enable it:
+
+```js
+const pluginWebc = require("@11ty/eleventy-plugin-webc");
+
+module.exports = function(eleventyConfig) {
+	eleventyConfig.addPlugin(pluginWebc, {
+		useTransform: true,
+	});
+};
 
 ## Examples
 
