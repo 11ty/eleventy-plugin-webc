@@ -35,9 +35,7 @@ It’s on [npm at `@11ty/eleventy-plugin-webc`](https://www.npmjs.com/package/@1
 npm install @11ty/eleventy-plugin-webc
 ```
 
-## Usage
-
-Enable the plugin in your Eleventy configuration file:
+To add support for `.webc` files in Eleventy, add the plugin in your Eleventy configuration file:
 
 ```js
 const pluginWebc = require("@11ty/eleventy-plugin-webc");
@@ -47,7 +45,8 @@ module.exports = function(eleventyConfig) {
 };
 ```
 
-### Full options list
+<details open>
+<summary>Full options list</summary>
 
 ```js
 const pluginWebc = require("@11ty/eleventy-plugin-webc");
@@ -55,10 +54,51 @@ const pluginWebc = require("@11ty/eleventy-plugin-webc");
 module.exports = function(eleventyConfig) {
 	eleventyConfig.addPlugin(pluginWebc, {
 		// Glob to find no-import global components
-		components: "_includes/components/**/*.webc", // defaults to `false`
+		components: false,
+		// components: "_includes/components/**/*.webc",
+
+		// Adds an Eleventy WebC transform to process all HTML output
+		useTransform: false,
+
+		// Additional global data used in the Eleventy WebC transform
+		transformData: {},
 	});
 };
 ```
+
+</details>
+
+### How to use it
+
+There are a few different ways to use WebC in Eleventy:
+
+1. Add a new `.webc` file to your input directory
+2. Use the [Render plugin](https://www.11ty.dev/docs/plugins/render/) in an existing template
+3. Use the WebC Eleventy transform to process all of the HTML files in your project (this is useful with legacy projects)
+
+#### Add New `.webc` files
+
+Adding the plugin will enable support for `.webc` files in your Eleventy project. Just make a new `.webc` HTML file in your Eleventy input directory and Eleventy will process it for you! If you’re using [global components](#components), don’t forget to point the plugin to your components directory!
+
+Notably, `.webc` files will operate [WebC in bundler mode](https://github.com/11ty/webc#aggregating-css-and-js), [aggregating the CSS and JS](#css-and-js) in use on each individual page to create a bundle of the assets in use on the page.
+
+#### Use the Render plugin
+
+Using Eleventy’s built-in [Render plugin](https://www.11ty.dev/docs/plugins/render/) with WebC also works great.
+
+Consider this example Nunjucks or Liquid template:
+
+```
+{% renderTemplate "webc" %}
+<my-custom-component></my-custom-component>
+{% endrenderTemplate %}
+```
+
+#### Use the global WebC Eleventy transform
+
+This is a catch-all option to let WebC process _all_ `.html` output files in your project. [Read more about Eleventy transforms.](https://www.11ty.dev/docs/config/#transforms) This method is useful when you want to get up and running with WebC on an existing project quickly (but is also the slowest method for build-performance).
+
+The WebC Eleventy transform operates WebC in non-bundler mode, which means that it does process WebC but _does not_ aggregate JS or CSS on the page.
 
 ## Examples
 
