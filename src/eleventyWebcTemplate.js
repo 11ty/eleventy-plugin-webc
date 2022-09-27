@@ -25,10 +25,12 @@ module.exports = function(eleventyConfig, options = {}) {
 	let renderManager = new EleventyRenderManager();
 	let cssManager = new CodeManager();
 	let jsManager = new CodeManager();
+	let incremental = new WebCIncremental();
 
 	eleventyConfig.on("eleventy.before", () => {
 		cssManager.reset();
 		jsManager.reset();
+		incremental.setComponents(options.components);
 	});
 
 	function getCss(pageUrl, bucket = "default") {
@@ -46,14 +48,8 @@ module.exports = function(eleventyConfig, options = {}) {
 		eleventyConfig.addFilter(options.filters.js, (url, bucket) => getJs(url, bucket));
 	}
 
-	let incremental = new WebCIncremental();
-
 	eleventyConfig.on("eleventy.layouts", layouts => {
 		incremental.setLayouts(layouts);
-	});
-
-	eleventyConfig.on("eleventy.before", () => {
-		incremental.setComponents(options.components);
 	});
 
 	eleventyConfig.addExtension("webc", {
@@ -61,8 +57,8 @@ module.exports = function(eleventyConfig, options = {}) {
 
 		init: async function() {
 			// For ESM in CJS
-			let e = await import("@11ty/webc");
-			incremental.setWebC(e.WebC);
+			let { WebC } = await import("@11ty/webc");
+			incremental.setWebC(WebC);
 
 			if(incremental.needsComponents()) {
 				incremental.setComponents(options.components);

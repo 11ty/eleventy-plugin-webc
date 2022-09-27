@@ -21,8 +21,7 @@ module.exports = function(eleventyConfig, options = {}) {
 	options = Object.assign({
 		components: false, // glob for no-import global components
 		useTransform: false, // global transform
-		// TODO this is only used by transforms
-		data: {}, // global data
+		transformData: {}, // extra global data for transforms specifically
 	}, options);
 
 	options.filters = filters;

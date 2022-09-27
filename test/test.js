@@ -171,8 +171,8 @@ test("WebC using a transform", async t => {
 	let results = await elev.toJSON();
 	let [result] = results;
 
-	t.is(result.content.trim(), `HELLO
-HELLO
+	t.is(result.content.trim(), `HELLO<span>0.4.0</span>
+HELLO<span>0.4.0</span>
 WHO IS THIS
 hi
 <span>HELLO FROM FRONT MATTER</span>`);
