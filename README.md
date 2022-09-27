@@ -126,6 +126,7 @@ module.exports = function(eleventyConfig) {
 		useTransform: true,
 	});
 };
+```
 
 ## Examples
 
