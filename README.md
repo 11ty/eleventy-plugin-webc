@@ -72,9 +72,9 @@ module.exports = function(eleventyConfig) {
 
 There are a few different ways to use WebC in Eleventy:
 
-1. Add a new `.webc` file to your input directory
+1. Add a new `.webc` file to your Eleventy input directory
 2. Use the [Render plugin](https://www.11ty.dev/docs/plugins/render/) in an existing template
-3. Use the WebC Eleventy transform to process all of the HTML files in your project (this is useful with legacy projects)
+3. Use the WebC Eleventy transform to process all of the HTML files in your project
 
 #### Add New `.webc` files
 
