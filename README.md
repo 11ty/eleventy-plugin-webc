@@ -259,6 +259,8 @@ Components can use the `webc:bucket` feature to output to any arbitrary bucket n
 <script webc:bucket="defer">/* This JS is put into the `defer` bucket */</script>
 ```
 
+`_includes/layout.webc`:
+
 ```html
 <!doctype html>
 <html lang="en">
