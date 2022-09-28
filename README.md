@@ -176,7 +176,7 @@ layout: "my-layout.webc"
 </html>
 ```
 
-_Notably note_: per standard Eleventy conventions front matter is supported in page-level templates only (files in your input directory) and not in components (see below). If this is something folks would like to see added, please file an issue!
+_Notable note_: per standard Eleventy conventions front matter is supported in page-level templates only (files in your input directory) and not in components (see below). If this is something folks would like to see added, please file an issue!
 
 ### Components
 
