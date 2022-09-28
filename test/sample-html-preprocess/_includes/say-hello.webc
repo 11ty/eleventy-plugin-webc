@@ -1,0 +1,1 @@
+HELLO<span @html="this.pkg.version"></span>

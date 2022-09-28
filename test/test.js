@@ -181,3 +181,17 @@ WHO IS THIS
 hi
 <span>HELLO FROM FRONT MATTER</span>`);
 });
+
+test("WebC using htmlTemplateEngine", async t => {
+	let elev = new Eleventy("./test/sample-html-preprocess/", "./test/sample-html-preprocess/_site", {
+		configPath: "./test/sample-html-preprocess/eleventy.config.js"
+	});
+
+	let results = await elev.toJSON();
+	let [result] = results;
+
+	t.is(result.content.trim(), `HELLO<span>0.4.0</span>
+HELLO<span>0.4.0</span>
+WHO IS THIS
+hi`);
+});
