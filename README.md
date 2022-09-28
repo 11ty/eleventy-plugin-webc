@@ -176,6 +176,8 @@ layout: "my-layout.webc"
 </html>
 ```
 
+_Notably note_: per standard Eleventy conventions front matter is supported in page-level templates only (files in your input directory) and not in components (see below). If this is something folks would like to see added, please file an issue!
+
 ### Components
 
 There are a few ways to use web components here:
@@ -211,7 +213,7 @@ You can also use and configure specific components as part of the data cascade a
 ---
 layout: "my-layout.webc"
 webc:
-	components: "./webc/*.webc"
+  components: "./webc/*.webc"
 ---
 <my-webc-component>WebC *is* HTML.</my-webc-component>
 ```
@@ -221,6 +223,8 @@ webc:
 ### CSS and JS (Bundler mode)
 
 [Eleventy Layouts](https://www.11ty.dev/docs/layouts/) can bundle any specific page’s assets (CSS and JS used by components on the page). These are automatically rolled up when a component uses `<script>` or `<style>`. You can use this to easily implement component-driven Critical CSS.
+
+Again, make sure you’re using the `getCSS` and `getJS` helpers in an Eleventy layout file.
 
 `_includes/webc/my-webc-component.webc`:
 
