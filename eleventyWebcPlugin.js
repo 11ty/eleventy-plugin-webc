@@ -2,10 +2,6 @@ const pkg = require("./package.json");
 const templatePlugin = require("./src/eleventyWebcTemplate.js");
 const transformPlugin = require("./src/eleventyWebcTransform.js");
 
-/* TODO
- * Use JavaScript functions or universal shortcodes as built-in components?
- */
-
 module.exports = function(eleventyConfig, options = {}) {
 	try {
 		eleventyConfig.versionCheck(pkg["11ty"].compatibility);
@@ -28,6 +24,8 @@ module.exports = function(eleventyConfig, options = {}) {
 
 	if(options.components) {
 		eleventyConfig.addWatchTarget(options.components);
+
+		// TODO add to eleventy ignores (if not in _includes folder)
 	}
 
 	templatePlugin(eleventyConfig, options);
