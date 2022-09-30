@@ -15,8 +15,6 @@ Watch the [crash course in Eleventy WebC on YouTube](https://www.youtube.com/wat
 * For more complex templating needs, you _can_ render any existing Eleventy template syntax (Liquid, markdown, Nunjucks, etc.) inside of WebC.
 * Works great with out of the box with [is-land](https://www.11ty.dev/docs/plugins/partial-hydration/)
 
-## ➡ [Documentation](https://www.11ty.dev/docs/languages/webc/)
-
 - Please star [Eleventy on GitHub](https://github.com/11ty/eleventy/)!
 - Follow us on Twitter [@eleven_ty](https://twitter.com/eleven_ty)
 - Support [11ty on Open Collective](https://opencollective.com/11ty)
