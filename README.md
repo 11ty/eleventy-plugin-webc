@@ -13,8 +13,6 @@ Watch the [crash course in Eleventy WebC on YouTube](https://www.youtube.com/wat
 - Support [11ty on Open Collective](https://opencollective.com/11ty)
 - Subscribe to our [YouTube channel](https://11ty.dev/youtube)
 
----
-
 ## Features
 
 * All of the [framework-independent WebC features](https://github.com/11ty/webc#features) out of the box.
