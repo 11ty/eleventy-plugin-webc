@@ -6,6 +6,15 @@ Adds support for [WebC, the single file web component format](https://github.com
 
 Watch the [crash course in Eleventy WebC on YouTube](https://www.youtube.com/watch?v=X-Bpjrkz-V8).
 
+[![npm Version](https://img.shields.io/npm/v/@11ty/eleventy-plugin-webc.svg?style=for-the-badge)](https://www.npmjs.com/package/@11ty/eleventy-plugin-webc)
+
+- Star [Eleventy on GitHub](https://github.com/11ty/eleventy/)!
+- Follow us on Twitter [@eleven_ty](https://twitter.com/eleven_ty)
+- Support [11ty on Open Collective](https://opencollective.com/11ty)
+- Subscribe to our [YouTube channel](https://11ty.dev/youtube)
+
+---
+
 ## Features
 
 * All of the [framework-independent WebC features](https://github.com/11ty/webc#features) out of the box.
@@ -14,17 +23,6 @@ Watch the [crash course in Eleventy WebC on YouTube](https://www.youtube.com/wat
 * Easily roll up the CSS and JS in-use by WebC components on a page for page-specific bundles. Dirt-simple critical CSS/JS to only load the code you need.
 * For more complex templating needs, you _can_ render any existing Eleventy template syntax (Liquid, markdown, Nunjucks, etc.) inside of WebC.
 * Works great with out of the box with [is-land](https://www.11ty.dev/docs/plugins/partial-hydration/)
-
----
-
-- Please star [Eleventy on GitHub](https://github.com/11ty/eleventy/)!
-- Follow us on Twitter [@eleven_ty](https://twitter.com/eleven_ty)
-- Support [11ty on Open Collective](https://opencollective.com/11ty)
-- Subscribe to our [YouTube channel](https://11ty.dev/youtube)
-- [11ty on npm](https://www.npmjs.com/org/11ty)
-- [11ty on GitHub](https://github.com/11ty)
-
-[![npm Version](https://img.shields.io/npm/v/@11ty/eleventy-plugin-webc.svg?style=for-the-badge)](https://www.npmjs.com/package/@11ty/eleventy-plugin-webc)
 
 ## Installation
 
