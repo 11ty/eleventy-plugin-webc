@@ -17,6 +17,8 @@ Adds support for [WebC, the single file web component format](https://github.com
 
 ## [Documentation](https://www.11ty.dev/docs/languages/webc/)
 
+This documentation has [moved to 11ty.dev](https://www.11ty.dev/docs/languages/webc/).
+
 ## Features
 
 * Brings first-class **components** to Eleventy.
@@ -32,7 +34,3 @@ Adds support for [WebC, the single file web component format](https://github.com
 * Bundler mode: Easily roll up the CSS and JS in-use by WebC components on a page for page-specific bundles. Dirt-simple critical CSS/JS to only load the code you need.
 * For more complex templating needs, render any existing Eleventy template syntax (Liquid, markdown, Nunjucks, etc.) inside of WebC.
 * Works great with [is-land](https://www.11ty.dev/docs/plugins/partial-hydration/) for web component hydration.
-
-## Documentation moved
-
-[This documentation has moved to 11ty.dev](https://www.11ty.dev/docs/languages/webc/).
