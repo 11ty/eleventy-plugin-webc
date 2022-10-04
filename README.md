@@ -15,7 +15,7 @@ Adds support for [WebC, the single file web component format](https://github.com
 - Support [11ty on Open Collective](https://opencollective.com/11ty)
 - Subscribe to our [YouTube channel](https://11ty.dev/youtube)
 
-## [Documentation](https://www.11ty.dev/docs/languages/webc/).
+## [Documentation](https://www.11ty.dev/docs/languages/webc/)
 
 ## Features
 
