@@ -2,8 +2,8 @@ const test = require("ava");
 const Eleventy = require("@11ty/eleventy");
 const pkg = require("../package.json");
 
-function normalizeNewLines(str) {
-  return str.replace(/\r\n/g, "\n");
+function normalize(str) {
+  return str.trim().replace(/\r\n/g, "\n");
 }
 
 test("Sample page (webc layout)", async t => {
@@ -14,7 +14,7 @@ test("Sample page (webc layout)", async t => {
 	let results = await elev.toJSON();
 	let [result] = results;
 
-	t.is(result.content.trim(), `<!doctype html>
+	t.is(normalize(result.content), `<!doctype html>
 <html lang="en">
 <head>
 		<meta charset="utf-8">
@@ -46,7 +46,7 @@ test("Sample page (liquid layout and one webc component)", async t => {
 	let results = await elev.toJSON();
 	let [result] = results;
 
-	t.is(normalizeNewLines(result.content.trim()), `<!doctype html>
+	t.is(normalize(result.content), `<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
@@ -79,7 +79,7 @@ test("Sample page with global component", async t => {
 	let results = await elev.toJSON();
 	let [result] = results;
 
-	t.is(result.content.trim(), `<!doctype html>
+	t.is(normalize(result.content), `<!doctype html>
 <html lang="en">
 <head>
 		<meta charset="utf-8">
@@ -111,7 +111,7 @@ test("Page with front matter no-import components", async t => {
 	let results = await elev.toJSON();
 	let [result] = results;
 
-	t.is(result.content.trim(), `<!doctype html>
+	t.is(normalize(result.content), `<!doctype html>
 <html lang="en">
 <head>
 		<meta charset="utf-8">
@@ -144,7 +144,7 @@ test("Page with front matter no-import components (relative to input path)", asy
 	let results = await elev.toJSON();
 	let [result] = results;
 
-	t.is(result.content.trim(), `<!doctype html>
+	t.is(normalize(result.content), `<!doctype html>
 <html lang="en">
 <head>
 		<meta charset="utf-8">
@@ -176,7 +176,7 @@ test("WebC using a transform", async t => {
 	let results = await elev.toJSON();
 	let [result] = results;
 
-	t.is(result.content.trim(), `HELLO<span>${pkg.version}</span>
+	t.is(normalize(result.content), `HELLO<span>${pkg.version}</span>
 HELLO<span>${pkg.version}</span>
 WHO IS THIS
 hi
@@ -191,7 +191,7 @@ test("WebC using htmlTemplateEngine", async t => {
 	let results = await elev.toJSON();
 	let [result] = results;
 
-	t.is(result.content.trim(), `HELLO<span>${pkg.version}</span>
+	t.is(normalize(result.content), `HELLO<span>${pkg.version}</span>
 HELLO<span>${pkg.version}</span>
 WHO IS THIS
 hi`);
@@ -205,7 +205,7 @@ test("Sample page with permalink: false (issue #9)", async t => {
 	let results = await elev.toJSON();
 	let [result] = results;
 
-	t.is(result.content.trim(), `<!doctype html>
+	t.is(normalize(result.content), `<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
@@ -227,7 +227,7 @@ test("Add JS Functions as helpers (universal filters) (issue #3)", async t => {
 	let results = await elev.toJSON();
 	let [result] = results;
 
-	t.is(result.content.trim(), `<!doctype html>
+	t.is(normalize(result.content), `<!doctype html>
 <html lang="en">
 <head>
 		<title></title>
