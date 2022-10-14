@@ -86,13 +86,12 @@ module.exports = function(eleventyConfig, options = {}) {
 
 			// TODO add all universal filters/JavaScript functions as helpers here:
 
-			page.setHelper("getCSS", function(url, bucket) {
-				return getCss(url, bucket);
-			});
+			// Support both casings (I prefer getCss, but yeah)
+			page.setHelper("getCss", (url, bucket) => getCss(url, bucket));
+			page.setHelper("getCSS", (url, bucket) => getCss(url, bucket));
 
-			page.setHelper("getJS", function(url, bucket) {
-				return getJs(url, bucket);
-			});
+			page.setHelper("getJs", (url, bucket) => getJs(url, bucket));
+			page.setHelper("getJS", (url, bucket) => getJs(url, bucket));
 
 			page.setTransform("11ty", async function(content) {
 				let syntax = this["11ty:type"];
