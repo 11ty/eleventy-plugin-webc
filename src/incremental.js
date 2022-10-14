@@ -20,12 +20,12 @@ class WebCIncremental {
 			this.globalComponentsMap = map;
 		}
 	}
-	
+
 	getComponentMap(glob) {
 		if(!this.webc) {
 			return false;
 		}
-		
+
 		let WebC = this.webc;
 		let components = WebC.getComponentsMap(glob);
 		// console.log( glob, Object.keys(components).length );
@@ -46,7 +46,16 @@ class WebCIncremental {
 	add(inputContent, inputPath) {
 		let WebC = this.webc;
 		let page = new WebC();
-		page.setBundlerMode(true);
+
+		// Explicitly disable bundler mode for layouts
+		if(this.layouts && this.layouts[inputPath]) {
+			page.setBundlerMode(false);
+			page.setReprocessingMode(false);
+		} else {
+			page.setBundlerMode(true);
+			page.setReprocessingMode(true);
+		}
+
 		page.setContent(inputContent, inputPath);
 
 		if(this.globalComponentsMap) {
