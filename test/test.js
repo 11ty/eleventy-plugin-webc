@@ -1,5 +1,6 @@
 const test = require("ava");
 const Eleventy = require("@11ty/eleventy");
+const pkg = require("../package.json");
 
 function normalizeNewLines(str) {
   return str.replace(/\r\n/g, "\n");
@@ -175,8 +176,8 @@ test("WebC using a transform", async t => {
 	let results = await elev.toJSON();
 	let [result] = results;
 
-	t.is(result.content.trim(), `HELLO<span>0.4.0</span>
-HELLO<span>0.4.0</span>
+	t.is(result.content.trim(), `HELLO<span>${pkg.version}</span>
+HELLO<span>${pkg.version}</span>
 WHO IS THIS
 hi
 <span>HELLO FROM FRONT MATTER</span>`);
@@ -190,8 +191,8 @@ test("WebC using htmlTemplateEngine", async t => {
 	let results = await elev.toJSON();
 	let [result] = results;
 
-	t.is(result.content.trim(), `HELLO<span>0.4.0</span>
-HELLO<span>0.4.0</span>
+	t.is(result.content.trim(), `HELLO<span>${pkg.version}</span>
+HELLO<span>${pkg.version}</span>
 WHO IS THIS
 hi`);
 });
