@@ -218,3 +218,20 @@ test("Sample page with permalink: false (issue #9)", async t => {
 	</body>
 </html>`);
 });
+
+test("Add JS Functions as helpers (universal filters) (issue #3)", async t => {
+	let elev = new Eleventy("./test/sample-universal-helpers/", "./test/sample-universal-helpers/_site", {
+		configPath: "./test/sample-universal-helpers/eleventy.config.js"
+	});
+
+	let results = await elev.toJSON();
+	let [result] = results;
+
+	t.is(result.content.trim(), `<!doctype html>
+<html lang="en">
+<head>
+		<title></title>
+	</head>
+	<body>helloAlways return this</body>
+</html>`);
+});

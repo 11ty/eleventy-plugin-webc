@@ -1,0 +1,10 @@
+---
+globalData: hello
+---
+<!doctype html>
+<html lang="en">
+	<head>
+		<title></title>
+	</head>
+	<body @html="testing(globalData)"></body>
+</html>

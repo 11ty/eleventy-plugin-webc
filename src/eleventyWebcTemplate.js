@@ -84,7 +84,10 @@ module.exports = function(eleventyConfig, options = {}) {
 		compile: async function(inputContent, inputPath) {
 			let page = incremental.add(inputContent, inputPath);
 
-			// TODO add all universal filters/JavaScript functions as helpers here:
+			// Add Eleventy JavaScript Functions as WebC helpers (Universal Filters also populate into these)
+			for(let helperName in this.config.javascriptFunctions) {
+				page.setHelper(helperName, this.config.javascriptFunctions[helperName]);
+			}
 
 			// Support both casings (I prefer getCss, but yeah)
 			page.setHelper("getCss", (url, bucket) => getCss(url, bucket));
