@@ -8,7 +8,7 @@ module.exports = function(eleventyConfig, options = {}) {
 	eleventyConfig.addTransform("@11ty/eleventy-plugin-webc", async function(content) {
 		// Skip non-.html output
 		// Skip .webc input
-		if(this.inputPath.endsWith(".webc") || !this.outputPath?.endsWith(".html")) {
+		if(this.inputPath.endsWith(".webc") || !(this.outputPath || "").endsWith(".html")) {
 			return content;
 		}
 
