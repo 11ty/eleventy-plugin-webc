@@ -121,7 +121,8 @@ module.exports = function(eleventyConfig, options = {}) {
 			return async (data) => {
 				let setupObject = { data };
 				if(data.webc?.components) {
-					setupObject.components = incremental.getComponentMap(relativePath(data.page.inputPath, data.webc.components));
+					let WebC = incremental.webc;
+					setupObject.components = WebC.getComponentsMap(relativePath(data.page.inputPath, data.webc.components));
 				}
 
 				let setup = await page.setup(setupObject);
