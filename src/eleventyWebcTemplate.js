@@ -26,11 +26,21 @@ module.exports = function(eleventyConfig, options = {}) {
 	let cssManager = new CodeManager();
 	let jsManager = new CodeManager();
 	let incremental = new WebCIncremental();
+	let componentsMap = false; // cache the glob search
+	let componentsMapKey;
 
-	eleventyConfig.on("eleventy.before", () => {
+	eleventyConfig.on("eleventy.before", async () => {
 		cssManager.reset();
 		jsManager.reset();
-		incremental.setComponents(options.components);
+
+		// For ESM in CJS
+		let { WebC } = await import("@11ty/webc");
+		incremental.setWebC(WebC);
+
+		if(options.components) {
+			componentsMap = WebC.getComponentsMap(options.components);
+			componentsMapKey = JSON.stringify(componentsMap);
+		}
 	});
 
 	function getCss(pageUrl, bucket = "default") {
@@ -55,16 +65,6 @@ module.exports = function(eleventyConfig, options = {}) {
 	eleventyConfig.addExtension("webc", {
 		outputFileExtension: "html",
 
-		init: async function() {
-			// For ESM in CJS
-			let { WebC } = await import("@11ty/webc");
-			incremental.setWebC(WebC);
-
-			if(incremental.needsComponents()) {
-				incremental.setComponents(options.components);
-			}
-		},
-
 		isIncrementalMatch: function (incrementalFilePath) {
 			// Eleventy layouts don’t appear directly in the WebC component graph, so we use the `eleventy.layouts` map here
 			if(incremental.isTemplateUsingLayout(this.inputPath, incrementalFilePath)) {
@@ -73,7 +73,8 @@ module.exports = function(eleventyConfig, options = {}) {
 
 			let {page, setup} = incremental.get(this.inputPath);
 			if(page && setup) {
-				if(page.getComponents(setup).includes(incrementalFilePath)) {
+				let components = page.getComponents(setup);
+				if(components.includes(incrementalFilePath)) {
 					return true;
 				}
 			}
@@ -81,8 +82,20 @@ module.exports = function(eleventyConfig, options = {}) {
 			return false;
 		},
 
+		compileOptions: {
+			cache: true,
+			getCacheKey: function(contents, inputPath) {
+				// if global components change, recompile!
+				return contents + inputPath + componentsMapKey;
+			}
+		},
+
 		compile: async function(inputContent, inputPath) {
 			let page = incremental.add(inputContent, inputPath);
+
+			if(componentsMap) {
+				page.defineComponents(componentsMap);
+			}
 
 			// Add Eleventy JavaScript Functions as WebC helpers (Universal Filters also populate into these)
 			for(let helperName in this.config.javascriptFunctions) {
