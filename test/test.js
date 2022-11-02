@@ -235,3 +235,17 @@ test("Add JS Functions as helpers (universal filters) (issue #3)", async t => {
 	<body>helloAlways return this</body>
 </html>`);
 });
+
+
+
+test("Use render plugin #22", async t => {
+	let elev = new Eleventy("./test/render-plugin/page.md", "./test/render-plugin/_site", {
+		configPath: "./test/render-plugin/eleventy.config.js"
+	});
+
+	let results = await elev.toJSON();
+	let [result] = results;
+
+	t.is(normalize(result.content), `<h1>Hello</h1>
+<p>My component</p>`);
+});

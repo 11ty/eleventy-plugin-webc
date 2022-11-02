@@ -1,7 +1,7 @@
 const path = require("path");
 
 const { EleventyRenderPlugin } = require("@11ty/eleventy");
-const EleventyRenderManager = EleventyRenderPlugin.RenderManager;
+const CompileString = EleventyRenderPlugin.String;
 
 const CodeManager = require("./codeManager.js");
 const WebCIncremental = require("./incremental.js");
@@ -22,7 +22,6 @@ function relativePath(inputPath, newGlob) {
 module.exports = function(eleventyConfig, options = {}) {
 	eleventyConfig.addTemplateFormats("webc");
 
-	let renderManager = new EleventyRenderManager();
 	let cssManager = new CodeManager();
 	let jsManager = new CodeManager();
 	let incremental = new WebCIncremental();
@@ -112,8 +111,10 @@ module.exports = function(eleventyConfig, options = {}) {
 			page.setTransform("11ty", async function(content) {
 				let syntax = this["11ty:type"];
 				if(syntax) {
-					let fn = await renderManager.compile(content, syntax);
-					return renderManager.render(fn, this, {});
+					let fn = await CompileString(content, syntax, {
+						templateConfig: eleventyConfig
+					});
+					return fn(data);
 				}
 				return content;
 			});
