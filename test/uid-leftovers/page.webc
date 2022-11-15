@@ -1,0 +1,4 @@
+---
+layout: layout.webc
+---
+<style @html="`#${uid} {}`"></style>

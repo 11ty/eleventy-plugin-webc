@@ -248,6 +248,27 @@ test("Use render plugin #22", async t => {
 <p>My component</p>`);
 });
 
+test("UID leftovers #17", async t => {
+	let elev = new Eleventy("./test/uid-leftovers/page.webc", "./test/uid-leftovers/_site", {
+		configPath: "./test/uid-leftovers/eleventy.config.js"
+	});
+
+	await elev.toJSON();
+
+	let results = await elev.toJSON();
+	let [result] = results;
+
+	t.is(normalize(result.content), `<!doctype html>
+<html>
+<head>
+		<title></title>
+		<style>#webc-2 {}</style>
+	</head>
+	<body>
+</body>
+</html>`);
+});
+
 test("Custom permalink JS, issue #27", async t => {
 	let elev = new Eleventy("./test/custom-permalink/page.webc", "./test/custom-permalink/_site", {
 		configPath: "./test/custom-permalink/eleventy.config.js"
