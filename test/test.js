@@ -236,8 +236,6 @@ test("Add JS Functions as helpers (universal filters) (issue #3)", async t => {
 </html>`);
 });
 
-
-
 test("Use render plugin #22", async t => {
 	let elev = new Eleventy("./test/render-plugin/page.md", "./test/render-plugin/_site", {
 		configPath: "./test/render-plugin/eleventy.config.js"
@@ -248,4 +246,19 @@ test("Use render plugin #22", async t => {
 
 	t.is(normalize(result.content), `<h1>Hello</h1>
 <p>My component</p>`);
+});
+
+test("Custom permalink JS, issue #27", async t => {
+	let elev = new Eleventy("./test/custom-permalink/page.webc", "./test/custom-permalink/_site", {
+		configPath: "./test/custom-permalink/eleventy.config.js"
+	});
+
+	let results = await elev.toJSON();
+	let [result] = results;
+	t.is(result.outputPath, "./test/custom-permalink/_site/hello-from-front-matter.html")
+	t.is(normalize(result.content), `<say-hello></say-hello>
+<say-hello></say-hello>
+WHO IS THIS
+hi
+<span>HELLO FROM FRONT MATTER</span>`);
 });

@@ -1,0 +1,9 @@
+---
+frontmatterdata: "HELLO FROM FRONT MATTER"
+permalink: "slugify(frontmatterdata) + '.html'"
+---
+<say-hello></say-hello>
+<say-hello></say-hello>
+WHO IS THIS
+hi
+<span @html="this.frontmatterdata"></span>

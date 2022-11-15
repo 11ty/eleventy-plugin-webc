@@ -27,13 +27,15 @@ module.exports = function(eleventyConfig, options = {}) {
 	let incremental = new WebCIncremental();
 	let componentsMap = false; // cache the glob search
 	let componentsMapKey;
+	let moduleScript;
 
 	eleventyConfig.on("eleventy.before", async () => {
 		cssManager.reset();
 		jsManager.reset();
 
 		// For ESM in CJS
-		let { WebC } = await import("@11ty/webc");
+		let { WebC, ModuleScript } = await import("@11ty/webc");
+		moduleScript = ModuleScript;
 		incremental.setWebC(WebC);
 
 		if(options.components) {
@@ -71,6 +73,7 @@ module.exports = function(eleventyConfig, options = {}) {
 			}
 
 			let {page, setup} = incremental.get(this.inputPath);
+
 			if(page && setup) {
 				let components = page.getComponents(setup);
 				if(components.includes(incrementalFilePath)) {
@@ -86,6 +89,14 @@ module.exports = function(eleventyConfig, options = {}) {
 			getCacheKey: function(contents, inputPath) {
 				// if global components change, recompile!
 				return contents + inputPath + componentsMapKey;
+			},
+			permalink: function(contents, inputPath) {
+				return (data) => {
+					return moduleScript.evaluateAttribute("permalink", contents, {
+						...this,
+						...data,
+					});
+				}
 			}
 		},
 
