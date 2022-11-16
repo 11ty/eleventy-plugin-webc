@@ -1,0 +1,8 @@
+---
+frontmatterdata: "HELLO FROM FRONT MATTER"
+---
+<say-hello></say-hello>
+<say-hello></say-hello>
+WHO IS THIS
+hi
+<span @html="this.frontmatterdata"></span>

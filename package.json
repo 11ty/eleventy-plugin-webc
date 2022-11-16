@@ -4,7 +4,7 @@
 	"description": "WebC support for Eleventy adds for Single File Web Components",
 	"main": "eleventyWebcPlugin.js",
 	"scripts": {
-		"test": "npx ava"
+		"test": "npx ava --no-worker-threads"
 	},
 	"publishConfig": {
 		"access": "public"

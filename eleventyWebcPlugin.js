@@ -15,7 +15,7 @@ module.exports = function(eleventyConfig, options = {}) {
 	}, options.filters);
 
 	options = Object.assign({
-		components: false, // glob for no-import global components
+		components: "_components/**/*.webc", // glob for no-import global components
 		useTransform: false, // global transform
 		transformData: {}, // extra global data for transforms specifically
 	}, options);
@@ -25,7 +25,9 @@ module.exports = function(eleventyConfig, options = {}) {
 	if(options.components) {
 		eleventyConfig.addWatchTarget(options.components);
 
-		// TODO add to eleventy ignores (if not in _includes folder)
+		// Opt-out of Eleventy to process components
+		// Note that Eleventy’s default ignores already have _includes/**
+		eleventyConfig.ignores.add(options.components);
 	}
 
 	templatePlugin(eleventyConfig, options);
