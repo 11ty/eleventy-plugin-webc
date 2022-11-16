@@ -26,10 +26,8 @@ class WebCIncremental {
 		// Explicitly disable bundler mode for layouts
 		if(this.layouts && this.layouts[inputPath]) {
 			page.setBundlerMode(false);
-			page.setReprocessingMode(false);
 		} else {
 			page.setBundlerMode(true);
-			page.setReprocessingMode(true);
 		}
 
 		page.setContent(inputContent, inputPath);

@@ -283,3 +283,30 @@ WHO IS THIS
 hi
 <span>HELLO FROM FRONT MATTER</span>`);
 });
+
+test("Raw layout html to re-enable reprocessing mode in layouts, issue #20", async t => {
+	let elev = new Eleventy("./test/raw-layout-html/page.webc", "./test/raw-layout-html/_site", {
+		configPath: "./test/raw-layout-html/eleventy.config.js"
+	});
+
+	let results = await elev.toJSON();
+	let [result] = results;
+	t.is(normalize(result.content), `<!doctype html>
+<html lang="en">
+<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content>
+		<title></title>
+	</head>
+	<body>
+		<reprocess-me>Using raw here to test reprocessing in the layout</reprocess-me>
+<reprocess-me>Using raw here to test reprocessing in the layout</reprocess-me>
+WHO IS THIS
+hi
+<span>HELLO FROM FRONT MATTER</span>
+		REPROCESSED
+	
+</body>
+</html>`);
+});
