@@ -1,1 +1,2 @@
 <reprocess-me webc:raw>Using raw here to test reprocessing in the layout</reprocess-me>
+<style>/* <reprocess-me>Hello</reprocess-me> */</style>

@@ -298,10 +298,13 @@ test("Raw layout html to re-enable reprocessing mode in layouts, issue #20", asy
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content>
 		<title></title>
+		<style>/* <reprocess-me>Hello</reprocess-me> */</style>
 	</head>
 	<body>
-		<reprocess-me>Using raw here to test reprocessing in the layout</reprocess-me>
-<reprocess-me>Using raw here to test reprocessing in the layout</reprocess-me>
+		<say-hello><reprocess-me>Using raw here to test reprocessing in the layout</reprocess-me>
+</say-hello>
+<say-hello><reprocess-me>Using raw here to test reprocessing in the layout</reprocess-me>
+</say-hello>
 WHO IS THIS
 hi
 <span>HELLO FROM FRONT MATTER</span>
