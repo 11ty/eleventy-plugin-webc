@@ -314,3 +314,15 @@ hi
 </html>`);
 });
 
+
+test("Shortcodes, issue #16", async t => {
+	let elev = new Eleventy("./test/shortcodes-issue-16/page.webc", "./test/shortcodes-issue-16/_site", {
+		configPath: "./test/shortcodes-issue-16/eleventy.config.js"
+	});
+
+	let results = await elev.toJSON();
+	let [result] = results;
+	t.is(normalize(result.content), `HELLO FROM FRONT MATTER
+<undefined-component></undefined-component>COMPONENTS DIR
+LOWERCASE`);
+});

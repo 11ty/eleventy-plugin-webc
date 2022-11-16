@@ -125,7 +125,7 @@ module.exports = function(eleventyConfig, options = {}) {
 					let fn = await CompileString(content, syntax, {
 						templateConfig: eleventyConfig
 					});
-					return fn(data);
+					return fn(this);
 				}
 				return content;
 			});

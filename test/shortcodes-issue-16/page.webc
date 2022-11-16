@@ -1,0 +1,8 @@
+---
+frontmatterdata: "HELLO FROM FRONT MATTER"
+---
+<template webc:type="11ty" 11ty:type="liquid">
+{{frontmatterdata}}
+{% testing %}
+{{ "lowercase" | uppercase }}
+</template>
