@@ -92,7 +92,7 @@ module.exports = function(eleventyConfig, options = {}) {
 			},
 			permalink: function(contents, inputPath) {
 				return (data) => {
-					return moduleScript.evaluateAttribute("permalink", contents, {
+					return moduleScript.evaluateScript("permalink", contents, {
 						...this,
 						...data,
 					});
