@@ -1,6 +1,6 @@
 {
 	"name": "@11ty/eleventy-plugin-webc",
-	"version": "0.6.0",
+	"version": "0.7.0",
 	"description": "WebC support for Eleventy adds for Single File Web Components",
 	"main": "eleventyWebcPlugin.js",
 	"scripts": {
@@ -14,7 +14,7 @@
 		"node": ">=14.18"
 	},
 	"11ty": {
-		"compatibility": ">=2.0.0-canary.16"
+		"compatibility": ">=2.0.0-canary.17"
 	},
 	"funding": {
 		"type": "opencollective",
