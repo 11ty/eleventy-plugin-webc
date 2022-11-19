@@ -326,3 +326,29 @@ test("Shortcodes, issue #16", async t => {
 <undefined-component></undefined-component>COMPONENTS DIR
 LOWERCASE`);
 });
+
+test("Nested layouts", async t => {
+	let elev = new Eleventy("./test/nested-layouts/page.webc", "./test/nested-layouts/_site", {
+		configPath: "./test/nested-layouts/eleventy.config.js"
+	});
+
+	let results = await elev.toJSON();
+	let [result] = results;
+	t.is(normalize(result.content), `<!doctype html>
+<html lang="en">
+<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content>
+		<title></title>
+		<style>/* <reprocess-me>Hello</reprocess-me> */</style>
+	</head>
+	<body>
+		Base
+Testing
+
+<style>/* <reprocess-me>Hello</reprocess-me> */</style>
+	
+</body>
+</html>`);
+});

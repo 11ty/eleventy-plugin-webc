@@ -68,7 +68,7 @@ module.exports = function(eleventyConfig, options = {}) {
 
 		isIncrementalMatch: function (incrementalFilePath) {
 			// Eleventy layouts don’t appear directly in the WebC component graph, so we use the `eleventy.layouts` map here
-			if(incremental.isTemplateUsingLayout(this.inputPath, incrementalFilePath)) {
+			if(incremental.isFileUsingLayout(this.inputPath, incrementalFilePath)) {
 				return true;
 			}
 

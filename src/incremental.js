@@ -12,7 +12,7 @@ class WebCIncremental {
 		this.layouts = layouts;
 	}
 
-	isTemplateUsingLayout(templateFilePath, layoutFilePath) {
+	isFileUsingLayout(templateFilePath, layoutFilePath) {
 		if(this.layouts && this.layouts[layoutFilePath] && this.layouts[layoutFilePath].includes(templateFilePath)) {
 			return true;
 		}

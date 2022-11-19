@@ -27,6 +27,9 @@ module.exports = function(eleventyConfig, options = {}) {
 
 		// Opt-out of Eleventy to process components
 		// Note that Eleventy’s default ignores already have _includes/**
+
+		// This will cause component files outside of _includes to not be watched: https://github.com/11ty/eleventy-plugin-webc/issues/29
+		// Fixed in @11ty/eleventy@2.0.0-canary.18: https://github.com/11ty/eleventy/issues/893
 		eleventyConfig.ignores.add(options.components);
 	}
 
