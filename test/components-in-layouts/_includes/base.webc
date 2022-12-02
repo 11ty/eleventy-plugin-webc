@@ -9,5 +9,6 @@
 	</head>
 	<body>
 		<template webc:nokeep @raw="content"></template>
+		<outer></outer>
 	</body>
 </html>

@@ -352,3 +352,51 @@ Testing
 </body>
 </html>`);
 });
+
+test("Components in layouts #11", async t => {
+	let elev = new Eleventy("./test/components-in-layouts/", "./test/components-in-layouts/_site", {
+		configPath: "./test/components-in-layouts/eleventy.config.js"
+	});
+
+	let results = await elev.toJSON();
+	let [page1, page2] = results;
+	t.is(normalize(page1.content), `<!doctype html>
+<html lang="en">
+<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content>
+		<title></title>
+		<style>/* Inner CSS */
+/* Outer CSS */</style>
+	</head>
+	<body>
+		
+<inner>Test
+</inner>
+		<outer>Test
+</outer>
+	
+</body>
+</html>`);
+
+t.is(normalize(page2.content), `<!doctype html>
+<html lang="en">
+<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content>
+		<title></title>
+		<style>/* Inner CSS */
+/* Outer CSS */</style>
+	</head>
+	<body>
+		
+<inner>Test
+</inner>
+		<outer>Test
+</outer>
+	
+</body>
+</html>`);
+});

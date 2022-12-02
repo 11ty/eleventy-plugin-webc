@@ -131,7 +131,9 @@ module.exports = function(eleventyConfig, options = {}) {
 			});
 
 			return async (data) => {
-				let setupObject = { data };
+				let setupObject = {
+					data,
+				};
 				if(data.webc?.components) {
 					let WebC = incremental.webc;
 					setupObject.components = WebC.getComponentsMap(relativePath(data.page.inputPath, data.webc.components));
@@ -147,20 +149,39 @@ module.exports = function(eleventyConfig, options = {}) {
 				let { ast, serializer } = setup;
 				let { html, css, js, buckets } = await serializer.compile(ast);
 
+				let hasAssets = false;
 				cssManager.addToPage(data.page.url, css, "default");
+				if(css.length > 0) {
+					hasAssets = true;
+				}
 
 				if(buckets.css) {
 					for(let bucket in buckets.css) {
 						cssManager.addToPage(data.page.url, buckets.css[bucket], bucket);
+						if(buckets.css[bucket] && buckets.css[bucket].length > 0) {
+							hasAssets = true;
+						}
 					}
 				}
 
 				jsManager.addToPage(data.page.url, js, "default");
+				if(js.length > 0) {
+					hasAssets = true;
+				}
 
 				if(buckets.js) {
 					for(let bucket in buckets.js) {
 						jsManager.addToPage(data.page.url, buckets.js[bucket], bucket);
+						if(buckets.js[bucket] && buckets.js[bucket].length > 0) {
+							hasAssets = true;
+						}
 					}
+				}
+
+				// Limit two pass compile for outermost layouts *only* that have JS/CSS assets
+				if(hasAssets && incremental.isOutermostLayoutInChain(inputPath)) {
+					let {html} = await serializer.compile(ast);
+					return html;
 				}
 
 				return html;

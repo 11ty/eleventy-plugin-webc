@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title></title>
-		<style @html="getCSS(page.url)"></style>
+		<style webc:keep @html="getCSS(page.url)"></style>
 	</head>
 	<body></body>
 </html>
