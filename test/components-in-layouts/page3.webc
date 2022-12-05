@@ -1,0 +1,3 @@
+No layouts here
+<style webc:keep @raw="getCss(page.url)"></style>
+<outer></outer>

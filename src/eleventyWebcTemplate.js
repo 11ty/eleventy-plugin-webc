@@ -5,6 +5,7 @@ const CompileString = EleventyRenderPlugin.String;
 
 const CodeManager = require("./codeManager.js");
 const WebCIncremental = require("./incremental.js");
+const BundleAssetsToContent = require("./bundleAssets.js");
 
 function relativePath(inputPath, newGlob) {
 	// project root
@@ -44,18 +45,21 @@ module.exports = function(eleventyConfig, options = {}) {
 		}
 	});
 
-	function getCss(pageUrl, bucket = "default") {
-		return cssManager.getForPage(pageUrl, bucket);
-	}
-
-	function getJs(pageUrl, bucket = "default") {
-		return jsManager.getForPage(pageUrl, bucket);
-	}
-
+	// Expose bundled CSS code to other template languages
 	if(options.filters.css) {
+		function getCss(pageUrl, bucket = "default") {
+			return cssManager.getForPage(pageUrl, bucket);
+		}
+
 		eleventyConfig.addFilter(options.filters.css, (url, bucket) => getCss(url, bucket));
 	}
+
+	// Expose bundled JS code to other template languages
 	if(options.filters.js) {
+		function getJs(pageUrl, bucket = "default") {
+			return jsManager.getForPage(pageUrl, bucket);
+		}
+
 		eleventyConfig.addFilter(options.filters.js, (url, bucket) => getJs(url, bucket));
 	}
 
@@ -113,11 +117,11 @@ module.exports = function(eleventyConfig, options = {}) {
 			}
 
 			// Support both casings (I prefer getCss, but yeah)
-			page.setHelper("getCss", (url, bucket) => getCss(url, bucket));
-			page.setHelper("getCSS", (url, bucket) => getCss(url, bucket));
+			page.setHelper("getCss", (url, bucket) => BundleAssetsToContent.getAssetKey("css", bucket));
+			page.setHelper("getCSS", (url, bucket) => BundleAssetsToContent.getAssetKey("css", bucket));
 
-			page.setHelper("getJs", (url, bucket) => getJs(url, bucket));
-			page.setHelper("getJS", (url, bucket) => getJs(url, bucket));
+			page.setHelper("getJs", (url, bucket) => BundleAssetsToContent.getAssetKey("js", bucket));
+			page.setHelper("getJS", (url, bucket) => BundleAssetsToContent.getAssetKey("js", bucket));
 
 			page.setTransform("11ty", async function(content) {
 				let syntax = this["11ty:type"];
@@ -149,42 +153,30 @@ module.exports = function(eleventyConfig, options = {}) {
 				let { ast, serializer } = setup;
 				let { html, css, js, buckets } = await serializer.compile(ast);
 
-				let hasAssets = false;
 				cssManager.addToPage(data.page.url, css, "default");
-				if(css.length > 0) {
-					hasAssets = true;
-				}
 
 				if(buckets.css) {
 					for(let bucket in buckets.css) {
 						cssManager.addToPage(data.page.url, buckets.css[bucket], bucket);
-						if(buckets.css[bucket] && buckets.css[bucket].length > 0) {
-							hasAssets = true;
-						}
 					}
 				}
 
 				jsManager.addToPage(data.page.url, js, "default");
-				if(js.length > 0) {
-					hasAssets = true;
-				}
 
 				if(buckets.js) {
 					for(let bucket in buckets.js) {
 						jsManager.addToPage(data.page.url, buckets.js[bucket], bucket);
-						if(buckets.js[bucket] && buckets.js[bucket].length > 0) {
-							hasAssets = true;
-						}
 					}
 				}
 
-				// Limit two pass compile for outermost layouts *only* that have JS/CSS assets
-				if(hasAssets && incremental.isOutermostLayoutInChain(inputPath)) {
-					let {html} = await serializer.compile(ast);
-					return html;
-				}
+				// Always do a two pass render for assets to catch any CSS/JS that were compiled *in* the same template.
+				// https://github.com/11ty/eleventy-plugin-webc/issues/33
+				// This unlocks use of bundled asset code anywhere in the WebC component tree (not just Eleventy Layouts)
+				let bundler = new BundleAssetsToContent(html);
+				bundler.setAssetManager("css", cssManager);
+				bundler.setAssetManager("js", jsManager);
 
-				return html;
+				return bundler.replaceAll(data.page.url);
 			};
 		}
 	});

@@ -359,7 +359,10 @@ test("Components in layouts #11", async t => {
 	});
 
 	let results = await elev.toJSON();
-	let [page1, page2] = results;
+	let [page1] = results.filter(page => page.inputPath.endsWith("page1.webc"));
+	let [page2] = results.filter(page => page.inputPath.endsWith("page2.webc"));
+	let [page3] = results.filter(page => page.inputPath.endsWith("page3.webc"));
+
 	t.is(normalize(page1.content), `<!doctype html>
 <html lang="en">
 <head>
@@ -371,7 +374,7 @@ test("Components in layouts #11", async t => {
 /* Outer CSS */</style>
 	</head>
 	<body>
-		
+		Page
 <inner>Test
 </inner>
 		<outer>Test
@@ -391,7 +394,7 @@ t.is(normalize(page2.content), `<!doctype html>
 /* Outer CSS */</style>
 	</head>
 	<body>
-		
+		Other page
 <inner>Test
 </inner>
 		<outer>Test
@@ -399,4 +402,9 @@ t.is(normalize(page2.content), `<!doctype html>
 	
 </body>
 </html>`);
+
+t.is(normalize(page3.content), `No layouts here
+<style>/* Outer CSS */</style>
+<outer>Test
+</outer>`);
 });

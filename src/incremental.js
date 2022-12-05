@@ -12,32 +12,6 @@ class WebCIncremental {
 
 	setLayouts(layouts) {
 		this.layouts = layouts;
-
-		let graph = new DepGraph();
-		for(let layout in layouts) {
-			if(!graph.hasNode(layout)) {
-				graph.addNode(layout);
-			}
-			for(let child of layouts[layout]) {
-				if(!layouts[child]) {
-					// not a layout
-					continue;
-				}
-				if(!graph.hasNode(child)) {
-					graph.addNode(child);
-				}
-				graph.addDependency(child, layout);
-			}
-		}
-
-		this.layoutDependencyGraph = graph;
-	}
-
-	isOutermostLayoutInChain(layoutFilePath) {
-		if(this.layouts && this.layouts[layoutFilePath]) {
-			return this.layoutDependencyGraph.dependenciesOf(layoutFilePath).length === 0;
-		}
-		return false;
 	}
 
 	isFileUsingLayout(templateFilePath, layoutFilePath) {
