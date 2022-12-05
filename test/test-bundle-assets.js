@@ -3,7 +3,7 @@ const BundleAssetsToContent = require("../src/bundleAssets.js");
 const CodeManager = require("../src/codeManager.js");
 
 test("getAssetKey", t => {
-	t.is(BundleAssetsToContent.getAssetKey("css", "default"), "<!--WebC:css:default:WebC-->");
+	t.is(BundleAssetsToContent.getAssetKey("css", "default"), "/*__WebC:css:default:WebC__*/");
 });
 
 test("findAll Empty", t => {

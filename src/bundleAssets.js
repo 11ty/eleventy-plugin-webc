@@ -1,5 +1,5 @@
 class BundleAssetsToContent {
-	static SPLIT_REGEX = /(<!--WebC:[^:]*:[^:]*:WebC-->)/;
+	static SPLIT_REGEX = /(\/\*__WebC:[^:]*:[^:]*:WebC__\*\/)/;
 	static SEPARATOR = ":";
 
 	constructor(content) {
@@ -8,7 +8,7 @@ class BundleAssetsToContent {
 	}
 
 	static getAssetKey(name, bucket) {
-		return `<!--WebC:${name}:${bucket || "default"}:WebC-->`
+		return `/*__WebC:${name}:${bucket || "default"}:WebC__*/`
 	}
 
 	setAssetManager(name, assetManager) {
@@ -16,7 +16,7 @@ class BundleAssetsToContent {
 	}
 
 	normalizeMatch(match) {
-		if(match.startsWith("<!--WebC:")) {
+		if(match.startsWith("/*__WebC:")) {
 			let [prefix, name, bucket, suffix] = match.split(BundleAssetsToContent.SEPARATOR);
 			return { name, bucket };
 		}
