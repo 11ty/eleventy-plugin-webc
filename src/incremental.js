@@ -1,5 +1,3 @@
-const { DepGraph } = require("dependency-graph");
-
 class WebCIncremental {
 	constructor() {
 		this.pages = {};
