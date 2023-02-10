@@ -408,3 +408,18 @@ t.is(normalize(page3.content), `No layouts here
 <outer>Test
 </outer>`);
 });
+
+
+test("Helpers in the bundler", async t => {
+	let elev = new Eleventy("./test/bundler-helpers/index.webc", "./test/bundler-helpers/_site", {
+		configPath: "./test/bundler-helpers/eleventy.config.js"
+	});
+
+	let results = await elev.toJSON();
+	let [result] = results;
+
+	t.is(normalize(result.content), `<style>/* Bundle 2 */
+/* Bundle 1 */</style>
+<style>/* Bundle 2 */
+/* Bundle 1 */</style>`);
+});

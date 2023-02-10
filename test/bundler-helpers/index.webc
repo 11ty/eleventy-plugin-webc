@@ -1,0 +1,6 @@
+<style>/* Bundle 1 */</style>
+<template webc:type="11ty" 11ty:type="liquid">
+{% css %}/* Bundle 2 */{% endcss %}
+</template>
+<style @raw="getCss(page.url)" webc:keep></style>
+<style @raw="getBundle('css')" webc:keep></style>
