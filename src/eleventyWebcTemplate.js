@@ -67,10 +67,10 @@ module.exports = function(eleventyConfig, options = {}) {
 		compileOptions: {
 			permalink: function(contents, inputPath) {
 				return (data) => {
-					return moduleScript.evaluateScript("permalink", contents, {
+					return moduleScript.evaluateScript(contents, {
 						...this,
 						...data,
-					});
+					}, `Check the permalink for ${inputPath}`);
 				}
 			}
 		},
