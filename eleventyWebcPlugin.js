@@ -1,3 +1,4 @@
+const eleventyBundlePlugin = require("@11ty/eleventy-plugin-bundle");
 const pkg = require("./package.json");
 const templatePlugin = require("./src/eleventyWebcTemplate.js");
 const transformPlugin = require("./src/eleventyWebcTransform.js");
@@ -9,6 +10,7 @@ module.exports = function(eleventyConfig, options = {}) {
 		console.log( `WARN: Eleventy Plugin (${pkg.name}) Compatibility: ${e.message}` );
 	}
 
+	// Deprecated: this lives in @11ty/eleventy-plugin-bundle now
 	let filters = Object.assign({
 		css: "webcGetCss",
 		js: "webcGetJs",
@@ -20,6 +22,7 @@ module.exports = function(eleventyConfig, options = {}) {
 		transformData: {}, // extra global data for transforms specifically
 	}, options);
 
+	// Deprecated: this lives in @11ty/eleventy-plugin-bundle now
 	options.filters = filters;
 
 	if(options.components) {
@@ -31,6 +34,13 @@ module.exports = function(eleventyConfig, options = {}) {
 		// This will cause component files outside of _includes to not be watched: https://github.com/11ty/eleventy-plugin-webc/issues/29
 		// Fixed in @11ty/eleventy@2.0.0-canary.18: https://github.com/11ty/eleventy/issues/893
 		eleventyConfig.ignores.add(options.components);
+	}
+
+	// TODO Remove this when @11ty/eleventy-plugin-bundle is moved to core.
+	// If the bundle plugin has not been added, we add it here:
+	let bundlePlugin = eleventyConfig.plugins.find(entry => entry.plugin.eleventyPackage === "@11ty/eleventy-plugin-bundle");
+	if(!bundlePlugin) {
+		eleventyConfig.addPlugin(eleventyBundlePlugin);
 	}
 
 	templatePlugin(eleventyConfig, options);
