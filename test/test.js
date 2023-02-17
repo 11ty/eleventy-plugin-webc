@@ -276,7 +276,8 @@ test("Custom permalink JS, issue #27", async t => {
 
 	let results = await elev.toJSON();
 	let [result] = results;
-	t.is(result.outputPath, "./test/custom-permalink/_site/hello-from-front-matter.html")
+
+	t.is(result.url, "hello-from-front-matter.html")
 	t.is(normalize(result.content), `<say-hello></say-hello>
 <say-hello></say-hello>
 WHO IS THIS
