@@ -79,7 +79,8 @@ module.exports = function(eleventyConfig, options = {}) {
 				page.defineComponents(componentsMap);
 			}
 
-			// Add Eleventy JavaScript Functions as WebC helpers (Universal Filters and Shortcodes also populate into these)
+			// Add Eleventy JavaScript Functions as WebC helpers
+			// Note that Universal Filters and Shortcodes populate into javascriptFunctions and will be present here
 			for(let helperName in this.config.javascriptFunctions) {
 				page.setHelper(helperName, this.config.javascriptFunctions[helperName]);
 			}

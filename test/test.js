@@ -424,3 +424,14 @@ test("Helpers in the bundler", async t => {
 <style>/* Bundle 2 */
 /* Bundle 1 */</style>`);
 });
+
+test("page with `javascript` front matter", async t => {
+	let elev = new Eleventy("./test/custom-js-front-matter/", "./test/custom-js-front-matter/_site", {
+		configPath: "./test/custom-js-front-matter/eleventy.config.js"
+	});
+
+	let results = await elev.toJSON();
+	let [result] = results;
+
+	t.is(normalize(result.content), `<span>HELLO FROM FRONT MATTER</span>`);
+});

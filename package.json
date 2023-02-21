@@ -43,6 +43,7 @@
 		"@11ty/webc": "^0.8.0"
 	},
 	"devDependencies": {
-		"ava": "^5.1.0"
+		"ava": "^5.1.0",
+		"node-retrieve-globals": "^2.0.4"
 	}
 }
