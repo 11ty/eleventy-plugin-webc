@@ -54,18 +54,16 @@ module.exports = function(eleventyConfig, options = {}) {
 
 		compileOptions: {
 			permalink: function(contents, inputPath) {
-				if(contents) {
-					if(typeof contents === "string") {
-						return (data) => {
-							return moduleScript.evaluateScript(contents, {
-								...this,
-								...data,
-							}, `Check the permalink for ${inputPath}`);
-						}
+				if(contents && typeof contents === "string") {
+					return (data) => {
+						return moduleScript.evaluateScript(contents, {
+							...this,
+							...data,
+						}, `Check the permalink for ${inputPath}`);
 					}
-
-					return contents;
 				}
+
+				return contents;
 			}
 		},
 
