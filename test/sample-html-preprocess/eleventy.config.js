@@ -2,7 +2,7 @@ const EleventyWebcPlugin = require("../../eleventyWebcPlugin.js");
 
 module.exports = function (eleventyConfig) {
 	eleventyConfig.addPlugin(EleventyWebcPlugin, {
-		components: "./test/sample-transform/_includes/*.webc",
+		components: "./test/sample-html-preprocess/_includes/*.webc",
 	});
 
 	return {

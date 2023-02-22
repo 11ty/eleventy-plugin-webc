@@ -22,6 +22,7 @@ module.exports = function(eleventyConfig, options = {}) {
 				componentsMap = WebC.getComponentsMap(options.components); // "./_includes/webc/*.webc"
 			}
 
+			page.setBundlerMode(false);
 			page.defineComponents(componentsMap);
 			page.setContent(content, this.outputPath);
 
