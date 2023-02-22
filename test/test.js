@@ -482,3 +482,15 @@ Hello
 </body>
 </html>`);
 });
+
+test("Permalink string, issue #52", async t => {
+	let elev = new Eleventy("./test/permalink-string/", "./test/permalink-string/_site", {
+		configPath: "./test/permalink-string/eleventy.config.js"
+	});
+
+	let results = await elev.toJSON();
+	let [result1, result2] = results.sort((a, b) => a.inputPath < b.inputPath ? -1 : 1);
+
+	t.is(result1.url, "/");
+	t.is(result2.url, "index2.html");
+});

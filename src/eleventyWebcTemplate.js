@@ -1,4 +1,6 @@
 const path = require("path");
+const debug = require("debug")("Eleventy:WebC");
+
 
 const { EleventyRenderPlugin } = require("@11ty/eleventy");
 const CompileString = EleventyRenderPlugin.String;
@@ -55,11 +57,18 @@ module.exports = function(eleventyConfig, options = {}) {
 		compileOptions: {
 			permalink: function(contents, inputPath) {
 				if(contents && typeof contents === "string") {
-					return (data) => {
-						return moduleScript.evaluateScript(contents, {
-							...this,
-							...data,
-						}, `Check the permalink for ${inputPath}`);
+					return async (data) => {
+						try {
+							// Hard to know if this is JavaScript code or just a raw string value.
+							let evaluatedString = await moduleScript.evaluateScript(contents, {
+								...this,
+								...data,
+							}, `Check the permalink for ${inputPath}`);
+							return evaluatedString;
+						} catch(e) {
+							debug("Error evaluating dynamic permalink, returning raw string contents instead: %o\n%O", contents, e);
+							return contents;
+						}
 					}
 				}
 
