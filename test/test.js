@@ -459,3 +459,26 @@ test.skip("Custom permalink JS, `dynamicPermalink: false` issue #32", async t =>
 
 	t.is(result.url, "/page.html")
 });
+
+test("WebC components in liquid layout, issue #35", async t => {
+	let elev = new Eleventy("./test/webc-component-in-layout/page.liquid", "./test/webc-component-in-layout/_site", {
+		configPath: "./test/webc-component-in-layout/eleventy.config.js"
+	});
+
+	let results = await elev.toJSON();
+	let [result] = results;
+
+	t.is(normalize(result.content), `<html lang="en">
+<head>
+<style>.wpwyzh6rm button{color:firebrick}</style>
+<script type="module">alert("test")</script>
+</head>
+<body><twitter-share class="wpwyzh6rm"><button type="button" class="nes-btn">Share Tweet</button>
+
+
+
+</twitter-share>
+Hello
+</body>
+</html>`);
+});
