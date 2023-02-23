@@ -34,8 +34,12 @@
 	"ava": {
 		"failFast": true,
 		"files": [
-			"./test/*.js"
-		]
+			"./test/test*.js"
+		],
+		"ignoredByWatcher": [
+      "**/_site/**",
+      ".cache"
+    ]
 	},
 	"dependencies": {
 		"@11ty/eleventy": "^2.0.0",

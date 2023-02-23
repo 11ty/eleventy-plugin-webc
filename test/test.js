@@ -1,6 +1,7 @@
 const test = require("ava");
 const Eleventy = require("@11ty/eleventy");
 const pkg = require("../package.json");
+const fs = require("fs");
 
 function normalize(str) {
   return str.trim().replace(/\r\n/g, "\n");
@@ -493,4 +494,21 @@ test("Permalink string, issue #52", async t => {
 
 	t.is(result1.url, "/");
 	t.is(result2.url, "index2.html");
+});
+
+test("Using file system bundles, issue #4", async t => {
+	let elev = new Eleventy("./test/bundler-to-file/", "./test/bundler-to-file/_site", {
+		configPath: "./test/generic.eleventy.config.js"
+	});
+
+	let [result] = await elev.toJSON();
+	t.is(normalize(result.content), `<link rel="stylesheet" type="text/css" href="/bundle/TJO8QCgik9.css">`);
+
+	// TODO test actual file output when https://github.com/11ty/eleventy-plugin-bundle/issues/4 is fixed
+	// let [ passthroughCopy, results ] = await elev.write();
+	// let [ result ] = results;
+	// t.is(normalize(result.content), `<link rel="stylesheet" type="text/css" href="/bundle/TJO8QCgik9.css">`);
+
+	// fs.unlinkSync("./test/bundler-to-file/_site/index.html")
+	// fs.rmdirSync("./test/bundler-to-file/_site/")
 });
