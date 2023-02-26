@@ -1,0 +1,8 @@
+---
+layout: layout.webc
+---
+
+<h1>Hello everyone!</h1>
+<my-button>Buttons are purple</my-button>
+<script>console.log("Hello world!")</script>
+<style webc:bucket="defer">h1 { color: red; }</style>

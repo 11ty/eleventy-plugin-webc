@@ -512,3 +512,45 @@ test("Using file system bundles, issue #4", async t => {
 	// fs.unlinkSync("./test/bundler-to-file/_site/index.html")
 	// fs.rmdirSync("./test/bundler-to-file/_site/")
 });
+
+test("Page with bundled scripts and styles from components", async (t) => {
+	let elev = new Eleventy(
+		"./test/script-and-style-buckets/page.webc",
+		"./test/script-and-style-buckets/_site",
+		{
+			configPath: "./test/script-and-style-buckets/eleventy.config.js",
+		}
+	);
+
+	let results = await elev.toJSON();
+	let [result] = results;
+
+	t.is(
+		normalize(result.content),
+		`<!doctype html>
+<html lang="en">
+<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content>
+		<title></title>
+		<style>button {
+		background: rebeccapurple;
+	}</style>
+		<script>console.log("Hello world!")</script>
+	</head>
+	<body>
+		<h1>Hello everyone!</h1>
+<button>Buttons are purple</button>
+
+
+
+
+		<style>h1 { color: red; }</style>
+		<script>console.log("Hello world but deferred!")</script>
+	
+
+</body>
+</html>`
+	);
+});

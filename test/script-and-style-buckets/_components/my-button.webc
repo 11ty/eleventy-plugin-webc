@@ -1,0 +1,7 @@
+<button webc:root="override"><slot>Click me</slot></button>
+<style>
+	button {
+		background: rebeccapurple;
+	}
+</style>
+<script webc:bucket="defer">console.log("Hello world but deferred!")</script>

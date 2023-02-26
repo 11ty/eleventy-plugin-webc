@@ -133,7 +133,7 @@ module.exports = function(eleventyConfig, options = {}) {
 
 				if(buckets.css) {
 					for(let bucket in buckets.css) {
-						this.config.javascriptFunctions.css(css, buckets.css[bucket], data.page.url);
+						this.config.javascriptFunctions.css(buckets.css[bucket], bucket, data.page.url);
 					}
 				}
 
@@ -142,7 +142,7 @@ module.exports = function(eleventyConfig, options = {}) {
 
 				if(buckets.js) {
 					for(let bucket in buckets.js) {
-						this.config.javascriptFunctions.js(js, buckets.js[bucket], data.page.url);
+						this.config.javascriptFunctions.js(buckets.js[bucket], bucket, data.page.url);
 					}
 				}
 
