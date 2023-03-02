@@ -43,8 +43,8 @@
 	},
 	"dependencies": {
 		"@11ty/eleventy": "^2.0.0",
-		"@11ty/eleventy-plugin-bundle": "^1.0.1",
-		"@11ty/webc": "^0.9.0"
+		"@11ty/eleventy-plugin-bundle": "^1.0.3",
+		"@11ty/webc": "^0.9.1"
 	},
 	"devDependencies": {
 		"ava": "^5.2.0",
