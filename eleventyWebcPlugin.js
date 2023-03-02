@@ -26,14 +26,25 @@ module.exports = function(eleventyConfig, options = {}) {
 	options.filters = filters;
 
 	if(options.components) {
-		eleventyConfig.addWatchTarget(options.components);
+		let components = options.components;
+		if(!Array.isArray(components)) {
+			components = [components];
+		}
 
-		// Opt-out of Eleventy to process components
-		// Note that Eleventy’s default ignores already have _includes/**
+		for(let entry of components) {
+			if(entry.startsWith("npm:")) {
+				continue;
+			}
 
-		// This will cause component files outside of _includes to not be watched: https://github.com/11ty/eleventy-plugin-webc/issues/29
-		// Fixed in @11ty/eleventy@2.0.0-canary.18: https://github.com/11ty/eleventy/issues/893
-		eleventyConfig.ignores.add(options.components);
+			eleventyConfig.addWatchTarget(entry);
+
+			// Opt-out of Eleventy to process components
+			// Note that Eleventy’s default ignores already have _includes/**
+
+			// This will cause component files outside of _includes to not be watched: https://github.com/11ty/eleventy-plugin-webc/issues/29
+			// Fixed in @11ty/eleventy@2.0.0-canary.18: https://github.com/11ty/eleventy/issues/893
+			eleventyConfig.ignores.add(entry);
+		}
 	}
 
 	// TODO Remove this when @11ty/eleventy-plugin-bundle is moved to core.
