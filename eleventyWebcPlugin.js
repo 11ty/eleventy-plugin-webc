@@ -22,6 +22,10 @@ module.exports = function(eleventyConfig, options = {}) {
 		transformData: {}, // extra global data for transforms specifically
 	}, options);
 
+	options.bundlePluginOptions = Object.assign({
+		hoistDuplicateBundlesFor: ["css", "js"]
+	}, options.bundlePluginOptions);
+
 	// Deprecated: this lives in @11ty/eleventy-plugin-bundle now
 	options.filters = filters;
 
@@ -51,7 +55,7 @@ module.exports = function(eleventyConfig, options = {}) {
 	// If the bundle plugin has not been added, we add it here:
 	let bundlePlugin = eleventyConfig.plugins.find(entry => entry.plugin.eleventyPackage === "@11ty/eleventy-plugin-bundle");
 	if(!bundlePlugin) {
-		eleventyConfig.addPlugin(eleventyBundlePlugin);
+		eleventyConfig.addPlugin(eleventyBundlePlugin, options.bundlePluginOptions);
 	}
 
 	templatePlugin(eleventyConfig, options);
