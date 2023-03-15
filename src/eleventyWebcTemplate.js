@@ -1,7 +1,6 @@
 const path = require("path");
 const debug = require("debug")("Eleventy:WebC");
 
-
 const { EleventyRenderPlugin } = require("@11ty/eleventy");
 const CompileString = EleventyRenderPlugin.String;
 
@@ -23,17 +22,19 @@ module.exports = function(eleventyConfig, options = {}) {
 	eleventyConfig.addTemplateFormats("webc");
 
 	let _WebC;
+	let globalComponentManager;
 	let componentsMap = false; // cache the glob search
 	let moduleScript;
 
 	eleventyConfig.on("eleventy.before", async () => {
 		// For ESM in CJS
-		let { WebC, ModuleScript } = await import("@11ty/webc");
+		let { WebC, ModuleScript, ComponentManager } = await import("@11ty/webc");
 		moduleScript = ModuleScript;
 		_WebC = WebC;
+		globalComponentManager = new ComponentManager();
 
 		if(options.components) {
-			componentsMap = WebC.getComponentsMap(options.components);
+			componentsMap = WebC.getComponentsMap(options.components); // second argument is ignores here
 		}
 	});
 
@@ -63,7 +64,7 @@ module.exports = function(eleventyConfig, options = {}) {
 							let evaluatedString = await moduleScript.evaluateScript(contents, {
 								...this,
 								...data,
-							}, `Check the permalink for ${inputPath}`);
+							}, `Check the permalink for ${inputPath}`, "eleventyWebcPermalink:" + inputPath);
 							return evaluatedString;
 						} catch(e) {
 							debug("Error evaluating dynamic permalink, returning raw string contents instead: %o\n%O", contents, e);
@@ -79,6 +80,7 @@ module.exports = function(eleventyConfig, options = {}) {
 		compile: async function(inputContent, inputPath) {
 			let page = new _WebC();
 
+			page.setGlobalComponentManager(globalComponentManager);
 			page.setBundlerMode(true);
 			page.setContent(inputContent, inputPath);
 
@@ -110,6 +112,7 @@ module.exports = function(eleventyConfig, options = {}) {
 				return content;
 			});
 
+			// Render function
 			return async (data) => {
 				let setupObject = {
 					data,
