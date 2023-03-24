@@ -43,11 +43,11 @@
 	},
 	"dependencies": {
 		"@11ty/eleventy": "^2.0.0",
-		"@11ty/eleventy-plugin-bundle": "^1.0.3",
-		"@11ty/webc": "^0.9.3"
+		"@11ty/eleventy-plugin-bundle": "^1.0.4",
+		"@11ty/webc": "^0.10.0"
 	},
 	"devDependencies": {
 		"ava": "^5.2.0",
-		"node-retrieve-globals": "^2.0.4"
+		"node-retrieve-globals": "^2.0.6"
 	}
 }
