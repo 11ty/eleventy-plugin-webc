@@ -38,6 +38,11 @@ module.exports = function(eleventyConfig, options = {}) {
 		}
 	});
 
+	let templateConfig;
+  eleventyConfig.on("eleventy.config", (cfg) => {
+    templateConfig = cfg;
+  });
+
 	// Deprecated (backwards compat only): this lives in @11ty/eleventy-plugin-bundle now
 	if(options.filters.css) {
 		eleventyConfig.addFilter(options.filters.css, (url, bucket) => {
@@ -105,7 +110,7 @@ module.exports = function(eleventyConfig, options = {}) {
 				let syntax = this["11ty:type"];
 				if(syntax) {
 					let fn = await CompileString(content, syntax, {
-						templateConfig: eleventyConfig
+						templateConfig
 					});
 					return fn(this);
 				}
