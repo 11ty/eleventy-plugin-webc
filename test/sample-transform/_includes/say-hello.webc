@@ -1,1 +1,1 @@
-HELLO<span @html="this.pkg.version"></span><style>/* Hello */</style>
+HELLO<span @html="$data.pkg.version"></span><style>/* Hello */</style>

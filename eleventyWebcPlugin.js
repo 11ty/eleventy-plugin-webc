@@ -18,6 +18,7 @@ module.exports = function(eleventyConfig, options = {}) {
 
 	options = Object.assign({
 		components: "_components/**/*.webc", // glob for no-import global components
+		scopedHelpers: ["css", "js", "html"],
 		useTransform: false, // global transform
 		transformData: {}, // extra global data for transforms specifically
 	}, options);

@@ -25,6 +25,7 @@ module.exports = function(eleventyConfig, options = {}) {
 	let globalComponentManager;
 	let componentsMap = false; // cache the glob search
 	let moduleScript;
+	let scopedHelpers = new Set(options.scopedHelpers);
 
 	eleventyConfig.on("eleventy.before", async () => {
 		// For ESM in CJS
@@ -96,15 +97,15 @@ module.exports = function(eleventyConfig, options = {}) {
 			// Add Eleventy JavaScript Functions as WebC helpers
 			// Note that Universal Filters and Shortcodes populate into javascriptFunctions and will be present here
 			for(let helperName in this.config.javascriptFunctions) {
-				page.setHelper(helperName, this.config.javascriptFunctions[helperName]);
+				page.setHelper(helperName, this.config.javascriptFunctions[helperName], scopedHelpers.has(helperName));
 			}
 
 			// Support both casings (I prefer getCss, but yeah)
-			page.setHelper("getCss", (url, bucket) => this.config.javascriptFunctions.getBundle("css", bucket));
-			page.setHelper("getCSS", (url, bucket) => this.config.javascriptFunctions.getBundle("css", bucket));
+			page.setHelper("getCss", (url, bucket) => this.config.javascriptFunctions.getBundle("css", bucket), scopedHelpers.has("getCss"));
+			page.setHelper("getCSS", (url, bucket) => this.config.javascriptFunctions.getBundle("css", bucket), scopedHelpers.has("getCSS"));
 
-			page.setHelper("getJs", (url, bucket) => this.config.javascriptFunctions.getBundle("js", bucket));
-			page.setHelper("getJS", (url, bucket) => this.config.javascriptFunctions.getBundle("js", bucket));
+			page.setHelper("getJs", (url, bucket) => this.config.javascriptFunctions.getBundle("js", bucket), scopedHelpers.has("getJs"));
+			page.setHelper("getJS", (url, bucket) => this.config.javascriptFunctions.getBundle("js", bucket), scopedHelpers.has("getJS"));
 
 			page.setTransform("11ty", async function(content) {
 				let syntax = this["11ty:type"];
