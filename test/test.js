@@ -450,9 +450,9 @@ test("Custom permalink JS, issue #32", async t => {
 
 // waiting on https://github.com/11ty/eleventy/issues/2823
 // ref: https://github.com/11ty/eleventy-plugin-webc/issues/32#issuecomment-1440831590
-test.skip("Custom permalink JS, `dynamicPermalink: false` issue #32", async t => {
-	let elev = new Eleventy("./test/custom-permalink-issue-32/page.webc", "./test/custom-permalink-issue-32/_site", {
-		configPath: "./test/custom-permalink-issue-32/eleventy.config.js"
+test("Custom permalink JS, `dynamicPermalink: false` issue #32", async t => {
+	let elev = new Eleventy("./test/custom-permalink-not-dynamic-issue-32/page.webc", "./test/custom-permalink-not-dynamic-issue-32/_site", {
+		configPath: "./test/custom-permalink-not-dynamic-issue-32/eleventy.config.js"
 	});
 
 	let results = await elev.toJSON();
