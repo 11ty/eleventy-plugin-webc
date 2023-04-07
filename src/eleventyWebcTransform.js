@@ -5,6 +5,8 @@ module.exports = function(eleventyConfig, options = {}) {
 		componentsMap = false;
 	});
 
+	let scopedHelpers = new Set(options.scopedHelpers);
+
 	eleventyConfig.addTransform("@11ty/eleventy-plugin-webc", async function(content) {
 		// Skip non-.html output
 		// Skip .webc input
@@ -19,7 +21,11 @@ module.exports = function(eleventyConfig, options = {}) {
 			let page = new WebC();
 
 			if(componentsMap === false && options.components) {
-				componentsMap = WebC.getComponentsMap(options.components); // "./_includes/webc/*.webc"
+				componentsMap = WebC.getComponentsMap(options.components); // "./_components/**/*.webc"
+			}
+
+			for(let helperName in eleventyConfig.javascriptFunctions) {
+				page.setHelper(helperName, eleventyConfig.javascriptFunctions[helperName], scopedHelpers.has(helperName));
 			}
 
 			page.setBundlerMode(false);
