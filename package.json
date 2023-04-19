@@ -48,6 +48,6 @@
 	},
 	"devDependencies": {
 		"ava": "^5.2.0",
-		"node-retrieve-globals": "^2.0.6"
+		"node-retrieve-globals": "^2.0.8"
 	}
 }

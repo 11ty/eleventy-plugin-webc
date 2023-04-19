@@ -17,6 +17,19 @@ function relativePath(inputPath, newGlob) {
 	return templateRelativePath;
 }
 
+function addContextToJavaScriptFunction(data, fn) {
+	let CONTEXT_KEYS = ["eleventy", "page"];
+	return function (...args) {
+		for (let key of CONTEXT_KEYS) {
+			if (data && data[key]) {
+				this[key] = data[key];
+			}
+		}
+
+		return fn.call(this, ...args);
+	};
+}
+
 module.exports = function(eleventyConfig, options = {}) {
 	// TODO remove this when WebC is moved out of plugin-land into core.
 	eleventyConfig.addTemplateFormats("webc");
@@ -94,12 +107,6 @@ module.exports = function(eleventyConfig, options = {}) {
 				page.defineComponents(componentsMap);
 			}
 
-			// Add Eleventy JavaScript Functions as WebC helpers
-			// Note that Universal Filters and Shortcodes populate into javascriptFunctions and will be present here
-			for(let helperName in this.config.javascriptFunctions) {
-				page.setHelper(helperName, this.config.javascriptFunctions[helperName], scopedHelpers.has(helperName));
-			}
-
 			// Support both casings (I prefer getCss, but yeah)
 			page.setHelper("getCss", (url, bucket) => this.config.javascriptFunctions.getBundle("css", bucket), scopedHelpers.has("getCss"));
 			page.setHelper("getCSS", (url, bucket) => this.config.javascriptFunctions.getBundle("css", bucket), scopedHelpers.has("getCSS"));
@@ -120,6 +127,13 @@ module.exports = function(eleventyConfig, options = {}) {
 
 			// Render function
 			return async (data) => {
+				// Add Eleventy JavaScript Functions as WebC helpers
+				// Note that Universal Filters and Shortcodes populate into javascriptFunctions and will be present here
+				for(let helperName in this.config.javascriptFunctions) {
+					let helperFunction = addContextToJavaScriptFunction(data, this.config.javascriptFunctions[helperName]);
+					page.setHelper(helperName, helperFunction, scopedHelpers.has(helperName));
+				}
+
 				let setupObject = {
 					data,
 				};

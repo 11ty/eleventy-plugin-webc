@@ -233,7 +233,7 @@ test("Add JS Functions as helpers (universal filters) (issue #3)", async t => {
 <head>
 		<title></title>
 	</head>
-	<body>helloAlways return this</body>
+	<body>helloAlways return this/page/</body>
 </html>`);
 });
 
