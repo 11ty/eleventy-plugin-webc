@@ -1,0 +1,4 @@
+---
+layout: layout.webc
+---
+<global-data-component></global-data-component>

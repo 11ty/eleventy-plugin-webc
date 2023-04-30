@@ -1,0 +1,24 @@
+<script webc:setup>
+	//	check sanity (b/c I can’t get this to work…)
+	console.log('this.index', this.index)
+</script>
+
+<!---
+<script webc:setup>
+	const dataEntry = ([key, val]) => `<dt>${key}</dt><dd>${val}</dd>`
+	const dataContent = []
+	for ([key, val] of index) {
+		dataContent.push(dataEntry([key, val]))
+	}
+	return `<dl>
+		${dataContent.join('\n')}
+	</dl>`
+</script>
+--->
+
+<dl>
+	<template webc:nokeep webc:for="(key, val) of this.index">
+		<dt @text="key"></dt>
+		<dd @text="val"></dd>
+	</template>
+</dl>

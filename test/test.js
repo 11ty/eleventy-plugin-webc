@@ -7,6 +7,41 @@ function normalize(str) {
   return str.trim().replace(/\r\n/g, "\n");
 }
 
+test("Global data from component", async t => {
+	let elev = new Eleventy("./test/global-data/page.webc", "./test/global-data/_site", {
+		configPath: "./test/global-data/eleventy.config.js"
+	});
+
+	let results = await elev.toJSON();
+	let [result] = results;
+
+	t.is(normalize(result.content), `<!doctype html>
+<html lang="en">
+<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content>
+		<title></title>
+		<style></style>
+		<script></script>
+	</head>
+	<body>
+		<dl>
+			<dt>key1</dt>
+			<dd>val1</dd>
+			<dt>key2</dt>
+			<dd>val2</dd>
+			<dt>key3</dt>
+			<dd>val3</dd>
+		</dl>
+
+		<style></style>
+		<script></script>
+	
+</body>
+</html>`);
+});
+
 test("Sample page (webc layout)", async t => {
 	let elev = new Eleventy("./test/sample-1/page.webc", "./test/sample-1/_site", {
 		configPath: "./test/sample-1/eleventy.config.js"
