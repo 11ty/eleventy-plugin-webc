@@ -59,6 +59,7 @@ module.exports = function(eleventyConfig, options = {}) {
 
 	// Deprecated (backwards compat only): this lives in @11ty/eleventy-plugin-bundle now
 	if(options.filters.css) {
+		debug('Warning: `options.filters.css` is deprecated! Use the `getBundle("css")` Universal Shortcode instead.')
 		eleventyConfig.addFilter(options.filters.css, (url, bucket) => {
 			return eleventyConfig.javascriptFunctions.getBundle("css", bucket);
 		});
@@ -66,6 +67,7 @@ module.exports = function(eleventyConfig, options = {}) {
 
 	// Deprecated (backwards compat only): this lives in @11ty/eleventy-plugin-bundle now
 	if(options.filters.js) {
+		debug('Warning: `options.filters.js` is deprecated! Use the `getBundle("js")` Universal Shortcode instead.')
 		eleventyConfig.addFilter(options.filters.js, (url, bucket) => {
 			return eleventyConfig.javascriptFunctions.getBundle("js", bucket)
 		});
