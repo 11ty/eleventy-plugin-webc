@@ -6,6 +6,7 @@ function normalize(str) {
 }
 
 // This needs a CHDIR because the default `components` glob is relative to the root directory (not the input directory)
+console.log("Make sure you are running `npm run test` and not `npx ava`");
 process.chdir("./test/default-components/");
 
 test("New default components directory, issue #14", async t => {

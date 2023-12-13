@@ -1,9 +1,6 @@
 const path = require("path");
 const debug = require("debug")("Eleventy:WebC");
 
-const { EleventyRenderPlugin } = require("@11ty/eleventy");
-const CompileString = EleventyRenderPlugin.String;
-
 function relativePath(inputPath, newGlob) {
 	// project root
 	if(newGlob.startsWith("~/")) {
@@ -117,6 +114,9 @@ module.exports = function(eleventyConfig, options = {}) {
 			page.setTransform("11ty", async function(content) {
 				let syntax = this["11ty:type"];
 				if(syntax) {
+					const { EleventyRenderPlugin } = await import("@11ty/eleventy");
+					const CompileString = EleventyRenderPlugin.String;
+
 					let fn = await CompileString(content, syntax, {
 						templateConfig
 					});
