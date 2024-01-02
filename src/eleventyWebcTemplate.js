@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require("node:path");
 const debug = require("debug")("Eleventy:WebC");
 
 function relativePath(inputPath, newGlob) {

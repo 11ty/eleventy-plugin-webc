@@ -1,7 +1,7 @@
 const test = require("ava");
 const Eleventy = require("@11ty/eleventy");
 const pkg = require("../package.json");
-const fs = require("fs");
+const fs = require("node:fs");
 
 function normalize(str) {
   return str.trim().replace(/\r\n/g, "\n");
@@ -34,7 +34,7 @@ hi
 
 		<style></style>
 		<script></script>
-	
+
 </body>
 </html>`);
 });
@@ -99,7 +99,7 @@ hi
 
 		<style></style>
 		<script></script>
-	
+
 </body>
 </html>`);
 });
@@ -131,7 +131,7 @@ hi
 
 		<style></style>
 		<script></script>
-	
+
 </body>
 </html>`);
 });
@@ -164,7 +164,7 @@ hi
 
 		<style></style>
 		<script></script>
-	
+
 </body>
 </html>`);
 });
@@ -311,7 +311,7 @@ WHO IS THIS
 hi
 <span>HELLO FROM FRONT MATTER</span>
 		REPROCESSED
-	
+
 </body>
 </html>`);
 });
@@ -350,7 +350,7 @@ test("Nested layouts", async t => {
 Testing
 
 <style>/* <reprocess-me>Hello</reprocess-me> */</style>
-	
+
 </body>
 </html>`);
 });
@@ -381,7 +381,7 @@ test("Components in layouts #11", async t => {
 </inner>
 		<outer>Test
 </outer>
-	
+
 </body>
 </html>`);
 
@@ -401,7 +401,7 @@ t.is(normalize(page2.content), `<!doctype html>
 </inner>
 		<outer>Test
 </outer>
-	
+
 </body>
 </html>`);
 
@@ -548,7 +548,7 @@ test("Page with bundled scripts and styles from components", async (t) => {
 
 		<style>h1 { color: red; }</style>
 		<script>console.log("Hello world but deferred!")</script>
-	
+
 
 </body>
 </html>`
