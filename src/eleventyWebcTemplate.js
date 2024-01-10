@@ -151,23 +151,25 @@ module.exports = function(eleventyConfig, options = {}) {
 				// 2.0.0-canary.19+
 				this.addDependencies(inputPath, components);
 
-				// Add CSS to bundle
-				this.config.javascriptFunctions.css(css, "default", data.page.url);
+        if (data.page.url) {
+          // Add CSS to bundle
+          this.config.javascriptFunctions.css(css, "default", data.page.url);
 
-				if(buckets.css) {
-					for(let bucket in buckets.css) {
-						this.config.javascriptFunctions.css(buckets.css[bucket], bucket, data.page.url);
-					}
-				}
+          if(buckets.css) {
+            for(let bucket in buckets.css) {
+              this.config.javascriptFunctions.css(buckets.css[bucket], bucket, data.page.url);
+            }
+          }
 
-				// Add JS to bundle
-				this.config.javascriptFunctions.js(js, "default", data.page.url);
+          // Add JS to bundle
+          this.config.javascriptFunctions.js(js, "default", data.page.url);
 
-				if(buckets.js) {
-					for(let bucket in buckets.js) {
-						this.config.javascriptFunctions.js(buckets.js[bucket], bucket, data.page.url);
-					}
-				}
+          if(buckets.js) {
+            for(let bucket in buckets.js) {
+              this.config.javascriptFunctions.js(buckets.js[bucket], bucket, data.page.url);
+            }
+          }
+        }
 
 				return html;
 			};
