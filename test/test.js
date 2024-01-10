@@ -554,3 +554,20 @@ test("Page with bundled scripts and styles from components", async (t) => {
 </html>`
 	);
 });
+
+test("Excluded files", async (t) => {
+  let elev = new Eleventy(
+    "./test/excluded-files/page.webc",
+    "./test/excluded-files/_site",
+    {
+      configPath: "./test/generic.eleventy.config.js"
+    }
+  );
+
+  let results = await elev.toJSON();
+  let [result] = results;
+  t.is(
+    normalize(result.content),
+    `<h1>Testing</h1>`
+  );
+});
