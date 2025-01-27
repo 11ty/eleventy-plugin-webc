@@ -47,6 +47,7 @@ module.exports = function(eleventyConfig, options = {}) {
 	}
 
 	// v0.12.0 upstream `bundlePluginOptions.toFileDirectory` (via Bundle Plugin changes) default changed from "bundle" to ""
+	// https://github.com/11ty/eleventy-plugin-bundle/releases/tag/v2.0.0
 	let htmlBundleOptions = Object.assign({}, options.bundlePluginOptions, {
 		hoist: false, // don’t hoist
 	});
