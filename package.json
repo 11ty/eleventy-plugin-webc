@@ -11,8 +11,7 @@
 	},
 	"license": "MIT",
 	"engines": {
-		"node": ">=14.18"
-		"node": ">=18"
+		"node": ">= 18"
 	},
 	"11ty": {
 		"compatibility": ">=3.0.0"
