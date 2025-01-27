@@ -2,7 +2,7 @@ const pkg = require("./package.json");
 const templatePlugin = require("./src/eleventyWebcTemplate.js");
 const transformPlugin = require("./src/eleventyWebcTransform.js");
 
-module.exports = async function(eleventyConfig, options = {}) {
+module.exports = function(eleventyConfig, options = {}) {
 	eleventyConfig.versionCheck(pkg["11ty"].compatibility);
 
 	// Error for removed filters.
@@ -46,8 +46,7 @@ module.exports = async function(eleventyConfig, options = {}) {
 		}
 	}
 
-	// v0.13.0 `options.bundlePluginOptions` because Bundle Plugin@2 for Eleventy v3.0.0
-	// v0.13.0 Upstream `toFileDirectory` default changed from "bundle" to ""
+	// v0.12.0 upstream `bundlePluginOptions.toFileDirectory` (via Bundle Plugin changes) default changed from "bundle" to ""
 	let htmlBundleOptions = Object.assign({}, options.bundlePluginOptions, {
 		hoist: false, // don’t hoist
 	});
