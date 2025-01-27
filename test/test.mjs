@@ -1,7 +1,9 @@
-const test = require("ava");
-const Eleventy = require("@11ty/eleventy");
+import test from "ava";
+import Eleventy from "@11ty/eleventy";
+
+import { createRequire } from "node:module";
+const require = createRequire(import.meta.url);
 const pkg = require("../package.json");
-const fs = require("fs");
 
 function normalize(str) {
   return str.trim().replace(/\r\n/g, "\n");
@@ -20,10 +22,10 @@ test("Sample page (webc layout)", async t => {
 <head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content>
+		<meta name="description" content="">
 		<title></title>
-		<style></style>
-		<script></script>
+		
+		
 	</head>
 	<body>
 		<say-hello></say-hello>
@@ -32,8 +34,8 @@ WHO IS THIS
 hi
 <span>HELLO FROM FRONT MATTER</span>
 
-		<style></style>
-		<script></script>
+		
+		
 	
 </body>
 </html>`);
@@ -55,7 +57,7 @@ test("Sample page (liquid layout and one webc component)", async t => {
 		<meta name="description" content="">
 		<title></title>
 		<style>* { color: red; }</style>
-		<script></script>
+		
 	</head>
 	<body>
 		<say-hello>HELLO
@@ -66,8 +68,8 @@ WHO IS THIS
 hi
 <span>HELLO FROM FRONT MATTER</span>
 
-		<style></style>
-		<script></script>
+		
+		
 	</body>
 </html>`);
 });
@@ -85,10 +87,10 @@ test("Sample page with global component", async t => {
 <head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content>
+		<meta name="description" content="">
 		<title></title>
-		<style></style>
-		<script></script>
+		
+		
 	</head>
 	<body>
 		This is a component.
@@ -97,8 +99,8 @@ WHO IS THIS
 hi
 <span>HELLO FROM FRONT MATTER</span>
 
-		<style></style>
-		<script></script>
+		
+		
 	
 </body>
 </html>`);
@@ -117,10 +119,10 @@ test("Page with front matter no-import components", async t => {
 <head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content>
+		<meta name="description" content="">
 		<title></title>
-		<style></style>
-		<script></script>
+		
+		
 	</head>
 	<body>
 		HELLO
@@ -129,8 +131,8 @@ WHO IS THIS
 hi
 <span>HELLO FROM FRONT MATTER</span>
 
-		<style></style>
-		<script></script>
+		
+		
 	
 </body>
 </html>`);
@@ -150,10 +152,10 @@ test("Page with front matter no-import components (relative to input path)", asy
 <head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content>
+		<meta name="description" content="">
 		<title></title>
-		<style></style>
-		<script></script>
+		
+		
 	</head>
 	<body>
 		HELLO
@@ -162,8 +164,8 @@ WHO IS THIS
 hi
 <span>HELLO FROM FRONT MATTER</span>
 
-		<style></style>
-		<script></script>
+		
+		
 	
 </body>
 </html>`);
@@ -239,7 +241,7 @@ test("Add JS Functions as helpers (universal filters) (issue #3)", async t => {
 
 test("Use render plugin #22", async t => {
 	let elev = new Eleventy("./test/render-plugin/page.md", "./test/render-plugin/_site", {
-		configPath: "./test/render-plugin/eleventy.config.js"
+		configPath: "./test/render-plugin/eleventy.config.mjs"
 	});
 
 	let results = await elev.toJSON();
@@ -278,7 +280,7 @@ test("Custom permalink JS, issue #27", async t => {
 	let results = await elev.toJSON();
 	let [result] = results;
 
-	t.is(result.url, "hello-from-front-matter.html")
+	t.is(result.url, "/hello-from-front-matter.html")
 	t.is(normalize(result.content), `<say-hello></say-hello>
 <say-hello></say-hello>
 WHO IS THIS
@@ -298,7 +300,7 @@ test("Raw layout html to re-enable reprocessing mode in layouts, issue #20", asy
 <head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content>
+		<meta name="description" content="">
 		<title></title>
 		<style>/* <reprocess-me>Hello</reprocess-me> */</style>
 	</head>
@@ -341,7 +343,7 @@ test("Nested layouts", async t => {
 <head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content>
+		<meta name="description" content="">
 		<title></title>
 		<style>/* <reprocess-me>Hello</reprocess-me> */</style>
 	</head>
@@ -370,7 +372,7 @@ test("Components in layouts #11", async t => {
 <head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content>
+		<meta name="description" content="">
 		<title></title>
 		<style>/* Inner CSS */
 /* Outer CSS */</style>
@@ -390,7 +392,7 @@ t.is(normalize(page2.content), `<!doctype html>
 <head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content>
+		<meta name="description" content="">
 		<title></title>
 		<style>/* Inner CSS */
 /* Outer CSS */</style>
@@ -463,7 +465,7 @@ test("Custom permalink JS, `dynamicPermalink: false` issue #32", async t => {
 
 test("WebC components in liquid layout, issue #35", async t => {
 	let elev = new Eleventy("./test/webc-component-in-layout/page.liquid", "./test/webc-component-in-layout/_site", {
-		configPath: "./test/webc-component-in-layout/eleventy.config.js"
+		configPath: "./test/webc-component-in-layout/eleventy.config.mjs"
 	});
 
 	let results = await elev.toJSON();
@@ -493,7 +495,7 @@ test("Permalink string, issue #52", async t => {
 	let [result1, result2] = results.sort((a, b) => a.inputPath < b.inputPath ? -1 : 1);
 
 	t.is(result1.url, "/");
-	t.is(result2.url, "index2.html");
+	t.is(result2.url, "/index2.html");
 });
 
 test("Using file system bundles, issue #4", async t => {
@@ -502,12 +504,12 @@ test("Using file system bundles, issue #4", async t => {
 	});
 
 	let [result] = await elev.toJSON();
-	t.is(normalize(result.content), `<link rel="stylesheet" type="text/css" href="/bundle/TJO8QCgik9.css">`);
+	t.is(normalize(result.content), `<link rel="stylesheet" type="text/css" href="/TJO8QCgik9.css">`);
 
 	// TODO test actual file output when https://github.com/11ty/eleventy-plugin-bundle/issues/4 is fixed
 	// let [ passthroughCopy, results ] = await elev.write();
 	// let [ result ] = results;
-	// t.is(normalize(result.content), `<link rel="stylesheet" type="text/css" href="/bundle/TJO8QCgik9.css">`);
+	// t.is(normalize(result.content), `<link rel="stylesheet" type="text/css" href="/TJO8QCgik9.css">`);
 
 	// fs.unlinkSync("./test/bundler-to-file/_site/index.html")
 	// fs.rmdirSync("./test/bundler-to-file/_site/")
@@ -518,7 +520,7 @@ test("Page with bundled scripts and styles from components", async (t) => {
 		"./test/script-and-style-buckets/page.webc",
 		"./test/script-and-style-buckets/_site",
 		{
-			configPath: "./test/script-and-style-buckets/eleventy.config.js",
+			configPath: "./test/script-and-style-buckets/eleventy.config.mjs",
 		}
 	);
 
@@ -532,7 +534,7 @@ test("Page with bundled scripts and styles from components", async (t) => {
 <head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content>
+		<meta name="description" content="">
 		<title></title>
 		<style>button {
 		background: rebeccapurple;

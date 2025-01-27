@@ -5,13 +5,13 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="">
 		<title></title>
-		<style>{{ page.url | getCss }}</style>
-		<script>{{ page.url | getJs }}</script>
+		<style>{% getBundle "css" %}</style>
+		<script>{% getBundle "js" %}</script>
 	</head>
 	<body>
 		{{ content }}
 
-		<style>{{ page.url | getCss: "defer" }}</style>
-		<script>{{ page.url | getJs: "defer" }}</script>
+		<style>{% getBundle "css", "defer" %}</style>
+		<script>{% getBundle "js", "defer" %}</script>
 	</body>
 </html>

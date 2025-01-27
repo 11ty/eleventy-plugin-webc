@@ -54,20 +54,6 @@ module.exports = function(eleventyConfig, options = {}) {
     templateConfig = cfg;
   });
 
-	// Deprecated (backwards compat only): this lives in @11ty/eleventy-plugin-bundle now
-	if(options.filters.css) {
-		eleventyConfig.addFilter(options.filters.css, (url, bucket) => {
-			return eleventyConfig.javascriptFunctions.getBundle("css", bucket);
-		});
-	}
-
-	// Deprecated (backwards compat only): this lives in @11ty/eleventy-plugin-bundle now
-	if(options.filters.js) {
-		eleventyConfig.addFilter(options.filters.js, (url, bucket) => {
-			return eleventyConfig.javascriptFunctions.getBundle("js", bucket)
-		});
-	}
-
 	eleventyConfig.addExtension("webc", {
 		outputFileExtension: "html",
 
@@ -81,7 +67,8 @@ module.exports = function(eleventyConfig, options = {}) {
 								...this,
 								...data,
 							}, `Check the permalink for ${inputPath}`, "eleventyWebcPermalink:" + inputPath);
-							return evaluatedString;
+
+							return evaluatedString.returns;
 						} catch(e) {
 							debug("Error evaluating dynamic permalink, returning raw string contents instead: %o\n%O", contents, e);
 							return contents;
@@ -105,17 +92,17 @@ module.exports = function(eleventyConfig, options = {}) {
 			}
 
 			// Support both casings (I prefer getCss, but yeah)
-			page.setHelper("getCss", (url, bucket) => this.config.javascriptFunctions.getBundle("css", bucket), scopedHelpers.has("getCss"));
-			page.setHelper("getCSS", (url, bucket) => this.config.javascriptFunctions.getBundle("css", bucket), scopedHelpers.has("getCSS"));
+			page.setHelper("getCss", (url, bucket) => this.config.javascriptFunctions.getBundle("css", bucket, url), scopedHelpers.has("getCss"));
+			page.setHelper("getCSS", (url, bucket) => this.config.javascriptFunctions.getBundle("css", bucket, url), scopedHelpers.has("getCSS"));
 
-			page.setHelper("getJs", (url, bucket) => this.config.javascriptFunctions.getBundle("js", bucket), scopedHelpers.has("getJs"));
-			page.setHelper("getJS", (url, bucket) => this.config.javascriptFunctions.getBundle("js", bucket), scopedHelpers.has("getJS"));
+			page.setHelper("getJs", (url, bucket) => this.config.javascriptFunctions.getBundle("js", bucket, url), scopedHelpers.has("getJs"));
+			page.setHelper("getJS", (url, bucket) => this.config.javascriptFunctions.getBundle("js", bucket, url), scopedHelpers.has("getJS"));
 
 			page.setTransform("11ty", async function(content) {
 				let syntax = this["11ty:type"];
 				if(syntax) {
-					const { EleventyRenderPlugin } = await import("@11ty/eleventy");
-					const CompileString = EleventyRenderPlugin.String;
+					const { RenderPlugin } = await import("@11ty/eleventy");
+					const CompileString = RenderPlugin.String;
 
 					let fn = await CompileString(content, syntax, {
 						templateConfig
@@ -129,6 +116,7 @@ module.exports = function(eleventyConfig, options = {}) {
 			return async (data) => {
 				// Add Eleventy JavaScript Functions as WebC helpers
 				// Note that Universal Filters and Shortcodes populate into javascriptFunctions and will be present here
+
 				for(let helperName in this.config.javascriptFunctions) {
 					let helperFunction = addContextToJavaScriptFunction(data, this.config.javascriptFunctions[helperName]);
 					page.setHelper(helperName, helperFunction, scopedHelpers.has(helperName));

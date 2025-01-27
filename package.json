@@ -14,7 +14,7 @@
 		"node": ">=14.18"
 	},
 	"11ty": {
-		"compatibility": ">=2.0.0"
+		"compatibility": ">=3.0.0"
 	},
 	"funding": {
 		"type": "opencollective",
@@ -34,20 +34,21 @@
 	"ava": {
 		"failFast": true,
 		"files": [
-			"./test/test*.js"
+			"./test/test*.js",
+			"./test/test*.mjs"
 		],
-		"ignoredByWatcher": [
-			"**/_site/**",
-			".cache"
-		]
+		"watchMode": {
+			"ignoreChanges": [
+				"**/_site/**",
+				".cache"
+			]
+		}
 	},
 	"dependencies": {
-		"@11ty/eleventy-plugin-bundle": "^1.0.4",
-		"@11ty/webc": "^0.11.0"
+		"@11ty/webc": "^0.11"
 	},
 	"devDependencies": {
-		"@11ty/eleventy": "^2.0.0",
-		"ava": "^5.2.0",
-		"node-retrieve-globals": "^2.0.8"
+		"@11ty/eleventy": "^3.0.0",
+		"ava": "^6.2.0"
 	}
 }

@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
-<style>{{ page.url | webcGetCss }}</style>
-<script type="module">{{ page.url |  webcGetJs }}</script>
+<style>{% getBundle "css" %}</style>
+<script type="module">{% getBundle "js" %}</script>
 </head>
 <body>{% renderTemplate "webc" %}<twitter-share></twitter-share>{% endrenderTemplate %}
 {{ content }}

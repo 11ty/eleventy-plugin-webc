@@ -1,5 +1,5 @@
-const test = require("ava");
-const Eleventy = require("@11ty/eleventy");
+import test from "ava";
+import Eleventy from "@11ty/eleventy";
 
 function normalize(str) {
   return str.trim().replace(/\r\n/g, "\n");

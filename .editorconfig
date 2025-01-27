@@ -13,3 +13,6 @@ insert_final_newline = true
 
 [test/*.js]
 trim_trailing_whitespace = false
+
+[test/*.mjs]
+trim_trailing_whitespace = false

@@ -1,34 +1,28 @@
-const eleventyBundlePlugin = require("@11ty/eleventy-plugin-bundle");
 const pkg = require("./package.json");
 const templatePlugin = require("./src/eleventyWebcTemplate.js");
 const transformPlugin = require("./src/eleventyWebcTransform.js");
 
-module.exports = function(eleventyConfig, options = {}) {
-	try {
-		eleventyConfig.versionCheck(pkg["11ty"].compatibility);
-	} catch(e) {
-		console.log( `WARN: Eleventy Plugin (${pkg.name}) Compatibility: ${e.message}` );
-	}
+module.exports = async function(eleventyConfig, options = {}) {
+	eleventyConfig.versionCheck(pkg["11ty"].compatibility);
 
-	// Deprecated: this lives in @11ty/eleventy-plugin-bundle now
-	let filters = Object.assign({
-		css: "webcGetCss",
-		js: "webcGetJs",
-	}, options.filters);
+	// Error for removed filters.
+	eleventyConfig.addFilter("webcGetCss", () => {
+		throw new Error("webcGetCss was removed from @11ty/eleventy-plugin-webc. Use the `getBundle('css')` shortcode instead.")
+	});
+
+	// Error for removed filters.
+	eleventyConfig.addFilter("webcGetJs", () => {
+		throw new Error("webcGetJs was removed from @11ty/eleventy-plugin-webc. Use the `getBundle('js')` shortcode instead.")
+	})
+
 
 	options = Object.assign({
 		components: "_components/**/*.webc", // glob for no-import global components
 		scopedHelpers: ["css", "js", "html"],
 		useTransform: false, // global transform
 		transformData: {}, // extra global data for transforms specifically
+		bundlePluginOptions: {},
 	}, options);
-
-	options.bundlePluginOptions = Object.assign({
-		hoistDuplicateBundlesFor: ["css", "js"]
-	}, options.bundlePluginOptions);
-
-	// Deprecated: this lives in @11ty/eleventy-plugin-bundle now
-	options.filters = filters;
 
 	if(options.components) {
 		let components = options.components;
@@ -52,12 +46,15 @@ module.exports = function(eleventyConfig, options = {}) {
 		}
 	}
 
-	// TODO Remove this when @11ty/eleventy-plugin-bundle is moved to core.
-	// If the bundle plugin has not been added, we add it here:
-	let bundlePlugin = eleventyConfig.plugins.find(entry => entry.plugin.eleventyPackage === "@11ty/eleventy-plugin-bundle");
-	if(!bundlePlugin) {
-		eleventyConfig.addPlugin(eleventyBundlePlugin, options.bundlePluginOptions);
-	}
+	// v0.13.0 `options.bundlePluginOptions` because Bundle Plugin@2 for Eleventy v3.0.0
+	// v0.13.0 Upstream `toFileDirectory` default changed from "bundle" to ""
+	let htmlBundleOptions = Object.assign({}, options.bundlePluginOptions, {
+		hoist: false, // don’t hoist
+	});
+
+	eleventyConfig.addBundle("html", htmlBundleOptions);
+	eleventyConfig.addBundle("css", options.bundlePluginOptions);
+	eleventyConfig.addBundle("js", options.bundlePluginOptions);
 
 	templatePlugin(eleventyConfig, options);
 
