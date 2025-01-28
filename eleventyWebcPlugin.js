@@ -21,8 +21,11 @@ module.exports = function(eleventyConfig, options = {}) {
 		scopedHelpers: ["css", "js", "html"],
 		useTransform: false, // global transform
 		transformData: {}, // extra global data for transforms specifically
-		bundlePluginOptions: {},
 	}, options);
+
+	options.bundlePluginOptions = Object.assign({
+		hoistDuplicateBundlesFor: ["css", "js"]
+	}, options.bundlePluginOptions);
 
 	if(options.components) {
 		let components = options.components;
@@ -46,15 +49,19 @@ module.exports = function(eleventyConfig, options = {}) {
 		}
 	}
 
-	// v0.12.0 upstream `bundlePluginOptions.toFileDirectory` (via Bundle Plugin changes) default changed from "bundle" to ""
+	// v0.12.0 upstream
+	// `bundlePluginOptions.toFileDirectory` (via Bundle Plugin changes) default changed from "bundle" to ""
 	// https://github.com/11ty/eleventy-plugin-bundle/releases/tag/v2.0.0
-	let htmlBundleOptions = Object.assign({}, options.bundlePluginOptions, {
-		hoist: false, // don’t hoist
-	});
 
-	eleventyConfig.addBundle("html", htmlBundleOptions);
-	eleventyConfig.addBundle("css", options.bundlePluginOptions);
-	eleventyConfig.addBundle("js", options.bundlePluginOptions);
+	eleventyConfig.addBundle("html", Object.assign({}, options.bundlePluginOptions, {
+		hoist: options.bundlePluginOptions.hoistDuplicateBundlesFor.includes("html"),
+	}));
+	eleventyConfig.addBundle("css", Object.assign({}, options.bundlePluginOptions, {
+		hoist: options.bundlePluginOptions.hoistDuplicateBundlesFor.includes("css"),
+	}));
+	eleventyConfig.addBundle("js", Object.assign({}, options.bundlePluginOptions, {
+		hoist: options.bundlePluginOptions.hoistDuplicateBundlesFor.includes("js")
+	}));
 
 	templatePlugin(eleventyConfig, options);
 
