@@ -157,6 +157,10 @@ module.exports = function(eleventyConfig, options = {}) {
 					}
 				}
 
+				if(options.after && typeof options.after === "function") {
+					await options.after(page, { html, css, js, buckets, components });
+				}
+
 				return html;
 			};
 		}
