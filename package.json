@@ -51,5 +51,13 @@
 	"devDependencies": {
 		"@11ty/eleventy": "^3.0.0",
 		"ava": "^6.2.0"
-	}
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/11ty/eleventy-plugin-webc"
+	},
+	"bugs": {
+		"url": "https://github.com/11ty/eleventy-plugin-webc/issues"
+	},
+	"homepage": "https://github.com/11ty/eleventy-plugin-webc"
 }
