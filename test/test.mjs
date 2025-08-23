@@ -313,7 +313,7 @@ WHO IS THIS
 hi
 <span>HELLO FROM FRONT MATTER</span>
 		REPROCESSED
-
+	
 </body>
 </html>`);
 });
@@ -352,7 +352,7 @@ test("Nested layouts", async t => {
 Testing
 
 <style>/* <reprocess-me>Hello</reprocess-me> */</style>
-
+	
 </body>
 </html>`);
 });
@@ -383,7 +383,7 @@ test("Components in layouts #11", async t => {
 </inner>
 		<outer>Test
 </outer>
-
+	
 </body>
 </html>`);
 
@@ -403,7 +403,7 @@ t.is(normalize(page2.content), `<!doctype html>
 </inner>
 		<outer>Test
 </outer>
-
+	
 </body>
 </html>`);
 
@@ -550,7 +550,7 @@ test("Page with bundled scripts and styles from components", async (t) => {
 
 		<style>h1 { color: red; }</style>
 		<script>console.log("Hello world but deferred!")</script>
-
+	
 
 </body>
 </html>`

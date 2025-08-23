@@ -1,4 +1,4 @@
-const path = require("node:path");
+const path = require("path");
 const debug = require("debug")("Eleventy:WebC");
 
 const { evaluateInlineCode } = require("./dynamicScript.js");
