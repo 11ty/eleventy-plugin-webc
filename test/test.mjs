@@ -222,6 +222,27 @@ test("Sample page with permalink: false (issue #9)", async t => {
 </html>`);
 });
 
+test("Sample WebC page with permalink: false (issue #86)", async t => {
+	let elev = new Eleventy("./test/sample-permalink-false-webc/", "./test/sample-permalink-false-webc/_site", {
+		configPath: "./test/sample-permalink-false-webc/eleventy.config.js"
+	});
+
+	let results = await elev.toJSON();
+	let [result] = results;
+
+	t.is(normalize(result.content), `<!doctype html>
+<html lang="en">
+<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content>
+		<title></title>
+	</head>
+	<body>
+</body>
+</html>`);
+});
+
 test("Add JS Functions as helpers (universal filters) (issue #3)", async t => {
 	let elev = new Eleventy("./test/sample-universal-helpers/", "./test/sample-universal-helpers/_site", {
 		configPath: "./test/sample-universal-helpers/eleventy.config.js"
