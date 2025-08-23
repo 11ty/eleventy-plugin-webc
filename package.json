@@ -32,6 +32,7 @@
 		"url": "git://github.com/11ty/eleventy-plugin-webc.git"
 	},
 	"bugs": "https://github.com/11ty/eleventy-plugin-webc/issues",
+  "homepage": "https://github.com/11ty/eleventy-plugin-webc",
 	"ava": {
 		"failFast": true,
 		"files": [
