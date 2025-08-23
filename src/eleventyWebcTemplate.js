@@ -1,6 +1,8 @@
 const path = require("path");
 const debug = require("debug")("Eleventy:WebC");
 
+const { evaluateInlineCode } = require("./dynamicScript.js");
+
 function relativePath(inputPath, newGlob) {
 	// project root
 	if(newGlob.startsWith("~/")) {
@@ -34,13 +36,11 @@ module.exports = function(eleventyConfig, options = {}) {
 	let _WebC;
 	let globalComponentManager;
 	let componentsMap = false; // cache the glob search
-	let moduleScript;
 	let scopedHelpers = new Set(options.scopedHelpers);
 
 	eleventyConfig.on("eleventy.before", async () => {
-		// For ESM in CJS
-		let { WebC, ModuleScript, ComponentManager } = await import("@11ty/webc");
-		moduleScript = ModuleScript;
+		// Temporary workaround for ESM in CJS
+		let { WebC, ComponentManager } = await import("@11ty/webc");
 		_WebC = WebC;
 		globalComponentManager = new ComponentManager();
 
@@ -61,18 +61,20 @@ module.exports = function(eleventyConfig, options = {}) {
 			permalink: function(contents, inputPath) {
 				if(contents && typeof contents === "string") {
 					return async (data) => {
-						try {
-							// Hard to know if this is JavaScript code or just a raw string value.
-							let evaluatedString = await moduleScript.evaluateScript(contents, {
-								...this,
-								...data,
-							}, `Check the permalink for ${inputPath}`, "eleventyWebcPermalink:" + inputPath);
+						let combinedContextData = {
+							...this,
+							...data,
+						};
 
-							return evaluatedString.returns;
-						} catch(e) {
+						// Hard to know if this is JavaScript code or just a raw string value.
+						return evaluateInlineCode(contents, {
+							filePath: inputPath,
+							context: combinedContextData,
+							data: combinedContextData,
+						}).catch(e => {
 							debug("Error evaluating dynamic permalink, returning raw string contents instead: %o\n%O", contents, e);
 							return contents;
-						}
+						});
 					}
 				}
 
