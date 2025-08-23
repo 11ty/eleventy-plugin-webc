@@ -1,6 +1,6 @@
 {
 	"name": "@11ty/eleventy-plugin-webc",
-	"version": "0.12.0-beta.4",
+	"version": "0.12.0-beta.5",
 	"description": "WebC support for Eleventy adds for Single File Web Components",
 	"main": "eleventyWebcPlugin.js",
 	"scripts": {

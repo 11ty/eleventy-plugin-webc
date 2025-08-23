@@ -1,3 +1,4 @@
+// TODO move this upstream into import-module-string
 // Code cribbed from WebC’s attributeSerializer.js
 async function evaluateInlineCode(codeString, options = {}) {
 	let { filePath, context, data } = Object.assign({ data: {} }, options);
