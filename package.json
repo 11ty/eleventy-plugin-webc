@@ -32,7 +32,7 @@
 		"url": "git://github.com/11ty/eleventy-plugin-webc.git"
 	},
 	"bugs": "https://github.com/11ty/eleventy-plugin-webc/issues",
-  "homepage": "https://github.com/11ty/eleventy-plugin-webc",
+	"homepage": "https://github.com/11ty/eleventy-plugin-webc",
 	"ava": {
 		"failFast": true,
 		"files": [
@@ -48,7 +48,7 @@
 	},
 	"dependencies": {
 		"@11ty/eleventy-plugin-bundle": "^3.0.7",
-		"@11ty/webc": "^0.12.0-beta.1",
+		"@11ty/webc": "^0.12.0-beta.2",
 		"import-module-string": "^2.0.3"
 	},
 	"devDependencies": {
