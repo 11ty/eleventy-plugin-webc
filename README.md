@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> This repository is archived. The Eleventy WebC plugin now lives in [`11ty/plugin-template-languages`](https://github.com/11ty/plugin-template-languages), so please file plugin issues there. Issues with WebC itself go to [`11ty/webc`](https://github.com/11ty/webc).
+
 <p align="center"><img src="https://www.11ty.dev/img/logo-github.svg" width="200" height="200" alt="11ty Logo"></p>
 
 # eleventy-plugin-webc 🕚⚡️🎈🐀
